@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.article_row.view.*
 
-class ArticlesAdapter(private val articles: List<Article>) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
+class ArticlesAdapter(private val articles: List<Article>, private val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_row, parent, false)
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view)
+        // on to the view holder through the extension function
+        viewHolder.onClick(itemClickListener)
+        return viewHolder
     }
 
     override fun getItemCount(): Int = articles.size
@@ -22,8 +25,15 @@ class ArticlesAdapter(private val articles: List<Article>) : RecyclerView.Adapte
         holder.snippet.text = article.snippet
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val title: TextView = itemView.title
         val snippet: TextView = itemView.snippet
     }
+}
+
+fun <T : RecyclerView.ViewHolder> T.onClick(event: (view: View, position: Int, type: Int) -> Unit): T {
+    itemView.setOnClickListener {
+        event.invoke(it, adapterPosition, itemViewType)
+    }
+    return this
 }
