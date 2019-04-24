@@ -13,7 +13,12 @@ class MainActivity : AppCompatActivity() {
 
         val articles = mutableListOf<Article>()
         for (i in 0..10) {
-            articles.add(Article("Article Title", "This is the content"))
+            articles.add(Article(
+                "A Random News Article",
+                "https://bnor.me/images/cartoon-v1.png",
+                "This is a random snippet.",
+                0,
+                "https://bnor.me"))
         }
 
         recyclerView.apply {

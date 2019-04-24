@@ -19,12 +19,11 @@ class ArticlesAdapter(private val articles: MutableList<Article>) : RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = articles[position]
         holder.title.text = article.title
-        holder.content.text = article.content
+        holder.snippet.text = article.snippet
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.title
-        val content: TextView = itemView.content
+        val snippet: TextView = itemView.snippet
     }
-
 }
