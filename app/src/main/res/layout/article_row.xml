@@ -17,9 +17,10 @@
 
         <ImageView
             android:id="@+id/photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:layout_margin="8dp"
+            android:contentDescription="@string/article_photo_content_desc"
             android:padding="16dp"
             android:src="@drawable/ic_insert_photo_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +34,8 @@
             android:layout_margin="4dp"
             android:padding="4dp"
             android:textColor="#000"
-            android:textSize="28sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/photo"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,6 +45,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:padding="4dp"
             android:textColor="#000"
             android:textSize="16sp"

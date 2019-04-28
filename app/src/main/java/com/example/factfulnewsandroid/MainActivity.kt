@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = ArticlesAdapter(articles, itemOnClick)
+            adapter = ArticlesAdapter(this@MainActivity, articles, itemOnClick)
         }
     }
 }

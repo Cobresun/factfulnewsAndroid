@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Factfulnews Android</string>
+    <string name="article_photo_content_desc">An image from the article</string>
 </resources>
