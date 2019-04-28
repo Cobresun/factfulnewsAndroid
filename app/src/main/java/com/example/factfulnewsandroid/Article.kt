@@ -5,5 +5,6 @@ data class Article(
     val urlToImage: String,
     val snippet: String,
     val index: Int,
-    val url: String
+    val url: String,
+    val sentiment: String
 )
