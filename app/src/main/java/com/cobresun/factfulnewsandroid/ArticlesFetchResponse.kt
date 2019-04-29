@@ -1,4 +1,4 @@
-package com.example.factfulnewsandroid
+package com.cobresun.factfulnewsandroid
 
 data class ArticlesFetchResponse(
     val success: Boolean,

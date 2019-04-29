@@ -1,4 +1,4 @@
-package com.example.factfulnewsandroid
+package com.cobresun.factfulnewsandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

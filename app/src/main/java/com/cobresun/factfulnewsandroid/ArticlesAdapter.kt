@@ -1,6 +1,7 @@
-package com.example.factfulnewsandroid
+package com.cobresun.factfulnewsandroid
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -25,13 +26,37 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val article = articles[position]
         holder.title.text = article.title
         holder.snippet.text = article.snippet
+
+        //TODO replace default variable
+        val score = ((-1..1).random())
+        var stringTemp: String      // replace stringTemp with article.sentiment
+
+        if(score < 0)
+            stringTemp = "Negative"
+        else if(score > 0)
+            stringTemp = "Positive"
+        else
+            stringTemp = "Neutral"
+
+        holder.sentiment.text = stringTemp //article.sentiment
+        holder.sentiment.setBackgroundColor(getSentColor(stringTemp))
         Glide.with(context).load(articles[position].urlToImage).into(holder.photo)
+    }
+
+    fun getSentColor(sentiment: String): Int{
+        if(sentiment == "Negative")
+            return Color.parseColor("#ffaaaa")
+        else if(sentiment == "Positive")
+            return Color.parseColor("#aaffaa")
+        else
+            return Color.parseColor("#aaaaff")
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val title: TextView = itemView.title
         val snippet: TextView = itemView.snippet
         val photo: ImageView = itemView.photo
+        val sentiment: TextView = itemView.sentiment
     }
 }
 
