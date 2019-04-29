@@ -1,4 +1,4 @@
-package com.example.factfulnewsandroid
+package com.cobresun.factfulnewsandroid
 
 import android.content.Context
 import android.graphics.Color

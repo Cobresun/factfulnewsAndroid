@@ -4,10 +4,12 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="15dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="10dp"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="8dp">
 
@@ -17,13 +19,13 @@
 
         <ImageView
             android:id="@+id/photo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
             android:contentDescription="@string/article_photo_content_desc"
-            android:padding="16dp"
+
             android:src="@drawable/ic_insert_photo_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,38 +34,51 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:layout_marginTop="8dp"
             android:padding="4dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/photo"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photo" />
 
         <TextView
             android:id="@+id/snippet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:padding="4dp"
             android:textColor="#000"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-
-        <TextView
-            android:id="@+id/sentiment"
+        <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner"
-            android:padding="4dp"
-            android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="@id/photo"
-            app:layout_constraintLeft_toLeftOf="@id/photo" />
+            app:layout_constraintLeft_toLeftOf="@id/photo"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="7dp">
+
+            <TextView
+                android:id="@+id/sentiment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:padding="4dp"
+                android:textColor="#000"
+                app:layout_constraintBottom_toBottomOf="@id/photo"
+                app:layout_constraintLeft_toLeftOf="@id/photo" />
+
+        </android.support.v7.widget.CardView>
 
     </android.support.constraint.ConstraintLayout>
 

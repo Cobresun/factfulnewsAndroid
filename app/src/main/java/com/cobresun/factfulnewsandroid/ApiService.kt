@@ -1,4 +1,4 @@
-package com.example.factfulnewsandroid
+package com.cobresun.factfulnewsandroid
 
 import retrofit2.Call
 import retrofit2.http.GET
