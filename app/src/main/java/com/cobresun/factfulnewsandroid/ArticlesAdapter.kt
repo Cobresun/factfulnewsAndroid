@@ -27,19 +27,8 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val article = articles[position]
         holder.title.text = article.title
         holder.snippet.text = article.snippet
-
-        // TODO: replace default variable
-        val score = ((-1..1).random())
-        val stringTemp: String      // replace stringTemp with article.sentiment
-
-        stringTemp = when {
-            score < 0 -> "Negative"
-            score > 0 -> "Positive"
-            else -> "Neutral"
-        }
-
-        holder.sentiment.text = stringTemp //article.sentiment
-        holder.sentiment.setBackgroundColor(getSentimentColor(stringTemp))
+        holder.sentiment.text = article.sentiment
+        holder.sentiment.setBackgroundColor(getSentimentColor(article.sentiment))
         Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
     }
 
