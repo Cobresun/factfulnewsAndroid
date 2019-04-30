@@ -29,27 +29,25 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
 
         //TODO replace default variable
         val score = ((-1..1).random())
-        var stringTemp: String      // replace stringTemp with article.sentiment
+        val stringTemp: String      // replace stringTemp with article.sentiment
 
-        if(score < 0)
-            stringTemp = "Negative"
-        else if(score > 0)
-            stringTemp = "Positive"
-        else
-            stringTemp = "Neutral"
+        stringTemp = when {
+            score < 0 -> "Negative"
+            score > 0 -> "Positive"
+            else -> "Neutral"
+        }
 
         holder.sentiment.text = stringTemp //article.sentiment
-        holder.sentiment.setBackgroundColor(getSentColor(stringTemp))
+        holder.sentiment.setBackgroundColor(getSentimentColor(stringTemp))
         Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
     }
 
-    fun getSentColor(sentiment: String): Int{
-        if(sentiment == "Negative")
-            return Color.parseColor("#ffaaaa")
-        else if(sentiment == "Positive")
-            return Color.parseColor("#aaffaa")
-        else
-            return Color.parseColor("#aaaaff")
+    private fun getSentimentColor(sentiment: String): Int{
+        return when (sentiment) {
+            "Negative" -> Color.parseColor("#ffaaaa")
+            "Positive" -> Color.parseColor("#aaffaa")
+            else -> Color.parseColor("#aaaaff")
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
