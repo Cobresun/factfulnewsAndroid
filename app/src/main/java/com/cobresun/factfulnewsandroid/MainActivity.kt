@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         api.fetchAllArticles().enqueue(object: Callback<ArticlesFetchResponse>{
             override fun onResponse(call: Call<ArticlesFetchResponse>, response: Response<ArticlesFetchResponse>) {
-                showArticle(response.body()!!.content)
+                showArticles(response.body()!!.articles)
             }
 
             override fun onFailure(call: Call<ArticlesFetchResponse>, t: Throwable) {
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showArticle(articles: List<Article>) {
+    private fun showArticles(articles: List<Article>) {
         val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
             val intent = Intent(view.context, ArticleWebView::class.java)
             intent.putExtra(ARTICLE_URL_EXTRA, articles[position].url)
