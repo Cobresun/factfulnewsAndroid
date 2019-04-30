@@ -1,7 +1,7 @@
 package com.cobresun.factfulnewsandroid
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.article_web_view.*
 
 const val ARTICLE_URL_EXTRA = "url"

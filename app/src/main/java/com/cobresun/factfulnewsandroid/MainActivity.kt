@@ -1,9 +1,8 @@
 package com.cobresun.factfulnewsandroid
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,14 +40,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showArticles(articles: List<Article>) {
-        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
+        val itemOnClick: (View, Int, Int) -> Unit = { view, position, _ ->
             val intent = Intent(view.context, ArticleWebView::class.java)
             intent.putExtra(ARTICLE_URL_EXTRA, articles[position].url)
             view.context.startActivity(intent)
         }
 
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
             adapter = ArticlesAdapter(this@MainActivity, articles, itemOnClick)
         }
     }

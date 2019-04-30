@@ -2,7 +2,7 @@ package com.cobresun.factfulnewsandroid
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.article_row.view.*
 
-class ArticlesAdapter(private val context: Context, private val articles: List<Article>, private val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
+class ArticlesAdapter(private val context: Context, private val articles: List<Article>,
+                      private val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_row, parent, false)
@@ -27,7 +28,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         holder.title.text = article.title
         holder.snippet.text = article.snippet
 
-        //TODO replace default variable
+        // TODO: replace default variable
         val score = ((-1..1).random())
         val stringTemp: String      // replace stringTemp with article.sentiment
 
@@ -58,7 +59,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
     }
 }
 
-fun <T : RecyclerView.ViewHolder> T.onClick(event: (view: View, position: Int, type: Int) -> Unit): T {
+fun <T: RecyclerView.ViewHolder> T.onClick(event: (view: View, position: Int, type: Int) -> Unit): T {
     itemView.setOnClickListener {
         event.invoke(it, adapterPosition, itemViewType)
     }
