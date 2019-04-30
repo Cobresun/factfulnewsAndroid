@@ -40,7 +40,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
 
         holder.sentiment.text = stringTemp //article.sentiment
         holder.sentiment.setBackgroundColor(getSentColor(stringTemp))
-        Glide.with(context).load(articles[position].urlToImage).into(holder.photo)
+        Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
     }
 
     fun getSentColor(sentiment: String): Int{
