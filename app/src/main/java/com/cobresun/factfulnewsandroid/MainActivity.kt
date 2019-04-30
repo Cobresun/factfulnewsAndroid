@@ -1,17 +1,17 @@
 package com.cobresun.factfulnewsandroid
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 const val TAG = "FactfulnewsTag"
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerView.apply {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = ArticlesAdapter(this@MainActivity, articles, itemOnClick)
         }
     }
