@@ -3,7 +3,6 @@ package com.cobresun.factfulnewsandroid.ui.activities
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ShareActionProvider
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat

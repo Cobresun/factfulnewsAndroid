@@ -33,6 +33,9 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         holder.sentiment.text = article.sentiment
         holder.sentiment.setBackgroundColor(getSentimentColor(article.sentiment))
         holder.share.setOnClickListener {
+            // TODO: Make this use the newer share menu in Android
+            //       instead of having it fall back to the old share
+            //       implementation.
             val shareIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, article.title + "\n\n" + article.url)
