@@ -1,14 +1,17 @@
-package com.cobresun.factfulnewsandroid
+package com.cobresun.factfulnewsandroid.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.cobresun.factfulnewsandroid.backend.models.Article
+import com.cobresun.factfulnewsandroid.R
 import kotlinx.android.synthetic.main.article_row.view.*
 
 class ArticlesAdapter(private val context: Context, private val articles: List<Article>,
@@ -29,6 +32,18 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         holder.snippet.text = article.snippet
         holder.sentiment.text = article.sentiment
         holder.sentiment.setBackgroundColor(getSentimentColor(article.sentiment))
+        holder.share.setOnClickListener {
+            // TODO: Make this use the newer share menu in Android
+            //       instead of having it fall back to the old share
+            //       implementation.
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, article.title + "\n\n" + article.url)
+                type = "text/plain"
+            }
+            context.startActivity(shareIntent)
+        }
+
         Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
     }
 
@@ -45,6 +60,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val snippet: TextView = itemView.snippet
         val photo: ImageView = itemView.photo
         val sentiment: TextView = itemView.sentiment
+        val share: ImageView = itemView.share
     }
 }
 
