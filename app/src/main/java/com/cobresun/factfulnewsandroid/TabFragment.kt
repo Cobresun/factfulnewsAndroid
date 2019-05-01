@@ -22,16 +22,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class TabFragment(index: Int) : Fragment() {
     var tabIndex = index
 
@@ -46,7 +36,7 @@ class TabFragment(index: Int) : Fragment() {
             .build()
 
         val api = retrofit.create(ApiService::class.java)
-        api.fetchArticles(CategoryUtils.categoryFromTabIndex[tabIndex]).enqueue(object: Callback<FetchResponse> {
+        api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object: Callback<FetchResponse> {
             override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
                 showArticles(response.body()!!.articles)
             }

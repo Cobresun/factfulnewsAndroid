@@ -1,9 +1,8 @@
 package com.cobresun.factfulnewsandroid
 
 object CategoryUtils {
-    const val numberCategories = 8
 
-    val categoryFromTabIndex = arrayOf(
+    val categories = arrayOf(
         "all",
         "business",
         "entertainment",

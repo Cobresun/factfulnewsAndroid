@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class TabsPagerAdapter(fragmentManager: FragmentManager, numCategories: Int):
     FragmentStatePagerAdapter(fragmentManager) {
-
+    var numCategories = numCategories
 
     override fun getItem(position: Int): Fragment {
         return TabFragment(position)
@@ -14,6 +14,6 @@ class TabsPagerAdapter(fragmentManager: FragmentManager, numCategories: Int):
 
 
     override fun getCount(): Int {
-        return 8                    //TODO replace with variable taking number of pages
+        return numCategories
     }
 }
