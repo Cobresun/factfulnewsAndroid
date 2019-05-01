@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cobresun.factfulnewsandroid.backend.models.Article
@@ -34,27 +32,13 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         holder.snippet.text = article.snippet
         holder.sentiment.text = article.sentiment
         holder.sentiment.setBackgroundColor(getSentimentColor(article.sentiment))
-
-        holder.articleMenu.setOnClickListener {
-            // TODO: Perhaps we could turn this into a bottom sheet
-            //       dialog at some point, instead of using a popup
-            //       menu, but this works for right now.
-            val menu = PopupMenu(context, holder.articleMenu)
-            menu.inflate(R.menu.menu_article)
-            menu.setOnMenuItemClickListener { item: MenuItem? ->
-                when (item!!.itemId) {
-                    R.id.action_share -> {
-                        val shareIntent: Intent = Intent().apply {
-                            action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, article.title + "\n\n" + article.url)
-                            type = "text/plain"
-                        }
-                        context.startActivity(shareIntent)
-                    }
-                }
-                true
+        holder.share.setOnClickListener {
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, article.title + "\n\n" + article.url)
+                type = "text/plain"
             }
-            menu.show()
+            context.startActivity(shareIntent)
         }
 
         Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
@@ -73,7 +57,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val snippet: TextView = itemView.snippet
         val photo: ImageView = itemView.photo
         val sentiment: TextView = itemView.sentiment
-        val articleMenu: ImageView = itemView.article_menu
+        val share: ImageView = itemView.share
     }
 }
 
