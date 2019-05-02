@@ -3,13 +3,13 @@ package com.cobresun.factfulnewsandroid
 object CategoryUtils {
 
     val categories = arrayOf(
-        "all",
+        "general",
         "business",
         "entertainment",
-        "general",
         "health",
         "science",
         "sports",
-        "technology")
+        "technology"
+    )
 
 }
