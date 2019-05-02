@@ -8,10 +8,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="#ffffff"
-    app:cardCornerRadius="10dp"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="8dp">
+    app:cardBackgroundColor="#ffffff">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,12 +31,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/rubik_medium"
             android:padding="4dp"
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
-            android:textColor="#000"
-            android:textSize="22sp"
-            android:textStyle="bold"
+            android:textColor="#232F34"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/photo" />
 
@@ -51,10 +48,11 @@
             android:layout_marginStart="4dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
+            android:fontFamily="@font/rubik_medium"
             android:maxLines="3"
             android:padding="4dp"
-            android:textColor="#000"
-            android:textSize="16sp"
+            android:textColor="#606669"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title"
@@ -71,14 +69,14 @@
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/snippet" />
+            app:layout_constraintTop_toBottomOf="@id/snippet"
+            android:contentDescription="@string/share_button" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            app:cardBackgroundColor="#ffffff"
-            app:cardCornerRadius="7dp"
+            app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
 
@@ -87,6 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:textColor="#000" />
 
         </androidx.cardview.widget.CardView>

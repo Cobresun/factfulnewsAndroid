@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Factfulnews Android</string>
     <string name="article_photo_content_desc">An image from the article</string>
-    <string name="article_menu_desc">Article more menu</string>
-    <string name="action_share_title">Share</string>
+    <string name="share_button">Share button</string>
 </resources>
