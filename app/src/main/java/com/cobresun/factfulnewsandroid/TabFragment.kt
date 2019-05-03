@@ -3,12 +3,12 @@ package com.cobresun.factfulnewsandroid
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
@@ -29,7 +29,6 @@ class TabFragment(index: Int) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://factfulnews.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,13 +37,15 @@ class TabFragment(index: Int) : Fragment() {
         val api = retrofit.create(ApiService::class.java)
         api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object: Callback<FetchResponse> {
             override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
-                showArticles(response.body()!!.articles)
+                if(activity != null)
+                    showArticles(response.body()!!.articles)
             }
 
             override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
                 Timber.d(t.toString()) // Log the failure.
             }
         })
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
