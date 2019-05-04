@@ -20,7 +20,7 @@ import org.junit.Test
 class BasicTests {
 
     @get:Rule
-    var activityRule: ActivityTestRule<MainActivity>
+    val activityRule: ActivityTestRule<MainActivity>
             = ActivityTestRule(MainActivity::class.java)
 
     @Test

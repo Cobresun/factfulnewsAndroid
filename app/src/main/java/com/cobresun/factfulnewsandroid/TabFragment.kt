@@ -23,8 +23,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
-class TabFragment(index: Int) : Fragment() {
-    var tabIndex = index
+class TabFragment(private val tabIndex: Int) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +39,7 @@ class TabFragment(index: Int) : Fragment() {
             override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
                 if(activity != null) {
                     if(response.body() != null) {
-                        response.body()?.let { showArticles(it.articles) }
+                        response.body()?.let { body -> showArticles(body.articles) }
                     }
                     else{
                         Toast.makeText(context, "Error Fetching response!", Toast.LENGTH_SHORT).show()

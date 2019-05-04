@@ -4,9 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class TabsPagerAdapter(fragmentManager: FragmentManager, numCategories: Int):
-    FragmentStatePagerAdapter(fragmentManager) {
-    var numCategories = numCategories
+class TabsPagerAdapter(fragmentManager: FragmentManager, private val numCategories: Int): FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
         return TabFragment(position)
