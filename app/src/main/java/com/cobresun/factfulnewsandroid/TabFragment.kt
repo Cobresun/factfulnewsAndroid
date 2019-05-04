@@ -26,6 +26,10 @@ import timber.log.Timber
 class TabFragment(index: Int) : Fragment() {
     var tabIndex = index
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        System.out.println("SUNJEEP: CREATING TAB")
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +42,7 @@ class TabFragment(index: Int) : Fragment() {
         val api = retrofit.create(ApiService::class.java)
         api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object: Callback<FetchResponse> {
             override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
+                System.out.println("SUNJEEP: Calling the api for " + CategoryUtils.categories[tabIndex])
                 if(activity != null) {
                     if(response.body() != null) {
                         response.body()?.let { showArticles(it.articles) }
@@ -81,6 +86,4 @@ class TabFragment(index: Int) : Fragment() {
             adapter = ArticlesAdapter(context, articles, itemOnClick)
         }
     }
-
-
 }
