@@ -31,10 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Each page is represented by its own fragment.
         val viewPager = findViewById<ViewPager>(R.id.pager)
 
-        var adapter: TabsPagerAdapter
-        adapter = TabsPagerAdapter(supportFragmentManager, tabLayout.tabCount)
-
-        viewPager.adapter = adapter
+        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, tabLayout.tabCount)
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
