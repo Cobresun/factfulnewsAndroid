@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -37,8 +38,14 @@ class TabFragment(index: Int) : Fragment() {
         val api = retrofit.create(ApiService::class.java)
         api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object: Callback<FetchResponse> {
             override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
-                if(activity != null)
-                    showArticles(response.body()!!.articles)
+                if(activity != null) {
+                    if(response.body() != null) {
+                        response.body()?.let { showArticles(it.articles) }
+                    }
+                    else{
+                        Toast.makeText(context, "Error Fetching response!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
 
             override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
