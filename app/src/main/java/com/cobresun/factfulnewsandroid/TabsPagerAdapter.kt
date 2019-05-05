@@ -8,8 +8,14 @@ class TabsPagerAdapter(fragmentManager: FragmentManager, numCategories: Int):
     FragmentStatePagerAdapter(fragmentManager) {
     var numCategories = numCategories
 
+    val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(numCategories)
+
     override fun getItem(position: Int): Fragment {
-        return TabFragment(position)
+        if(tabsCache[position] == null){
+            tabsCache[position] = TabFragment(position)
+        }
+
+        return tabsCache[position] ?: TabFragment(position)
     }
 
 
