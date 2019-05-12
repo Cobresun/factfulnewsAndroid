@@ -28,9 +28,10 @@ class TabFragment(index: Int) : Fragment() {
     var tabIndex = index
     var articles : List<Article>? = null
 
+    // Afterwards keep displaying already initialized articles
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(activity != null){               // Afterwards keep displaying already initialized articles
+        if(activity != null){
             articles?.let { showArticles(it) }
         }
     }
@@ -60,7 +61,7 @@ class TabFragment(index: Int) : Fragment() {
                 }
 
                 override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
-                    Timber.d(t.toString()) // Log the failure.
+                    Timber.d(t.toString())
                 }
             })
         }

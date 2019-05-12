@@ -33,9 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.adapter = TabsPagerAdapter(supportFragmentManager, tabLayout.tabCount)
 
-        viewPager.offscreenPageLimit = 0
-
-
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
