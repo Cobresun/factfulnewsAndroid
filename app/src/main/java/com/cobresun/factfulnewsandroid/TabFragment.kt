@@ -1,6 +1,7 @@
 package com.cobresun.factfulnewsandroid
 
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,7 +24,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
-class TabFragment(private val tabIndex: Int) : Fragment() {
+class TabFragment(index: Int) : Fragment() {
+    var tabIndex = index
+    var articles : List<Article>? = null
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if(activity != null){               // Afterwards keep displaying already initialized articles
+            articles?.let { showArticles(it) }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,24 +44,26 @@ class TabFragment(private val tabIndex: Int) : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val api = retrofit.create(ApiService::class.java)
-        api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object: Callback<FetchResponse> {
-            override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
-                if(activity != null) {
-                    if(response.body() != null) {
-                        response.body()?.let { body -> showArticles(body.articles) }
-                    }
-                    else{
+        // Initialize and display articles from api response on first run only
+        if(articles == null) {
+            val api = retrofit.create(ApiService::class.java)
+            api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object : Callback<FetchResponse> {
+                override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
+                    if (response.body() != null) {
+                        response.body()?.let { articles = it.articles }
+                        if (recyclerView != null) {
+                            articles?.let { showArticles(it) }
+                        }
+                    } else {
                         Toast.makeText(context, "Error Fetching response!", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
-                Timber.d(t.toString()) // Log the failure.
-            }
-        })
-
+                override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
+                    Timber.d(t.toString())
+                }
+            })
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
@@ -80,6 +92,4 @@ class TabFragment(private val tabIndex: Int) : Fragment() {
             adapter = ArticlesAdapter(context, articles, itemOnClick)
         }
     }
-
-
 }
