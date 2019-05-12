@@ -65,6 +65,7 @@ class TabFragment(index: Int) : Fragment() {
                 }
             })
         }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }

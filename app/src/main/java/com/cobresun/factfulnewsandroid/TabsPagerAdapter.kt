@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 class TabsPagerAdapter(fragmentManager: FragmentManager, private val numCategories: Int): FragmentStatePagerAdapter(fragmentManager) {
-
     val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(numCategories)
 
     override fun getItem(position: Int): Fragment {
