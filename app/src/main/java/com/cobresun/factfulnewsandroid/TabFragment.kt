@@ -28,10 +28,9 @@ class TabFragment(index: Int) : Fragment() {
     var tabIndex = index
     var articles : List<Article>? = null
 
-    // Afterwards keep displaying already initialized articles
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(activity != null){
+        if(activity != null){               // Afterwards keep displaying already initialized articles
             articles?.let { showArticles(it) }
         }
     }
@@ -65,7 +64,6 @@ class TabFragment(index: Int) : Fragment() {
                 }
             })
         }
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
