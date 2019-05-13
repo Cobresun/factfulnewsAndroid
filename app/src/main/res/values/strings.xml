@@ -2,5 +2,5 @@
     <string name="app_name">Factfulnews Android</string>
     <string name="article_photo_content_desc">An image from the article</string>
     <string name="share_button">Share button</string>
-    <string name="ttrFormat">%d minute read</string>
+    <string name="time_to_read_format">%d minute read</string>
 </resources>
