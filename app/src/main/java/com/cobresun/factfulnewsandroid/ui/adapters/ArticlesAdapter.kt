@@ -2,6 +2,7 @@ package com.cobresun.factfulnewsandroid.ui.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -30,8 +31,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val article = articles[position]
         holder.title.text = article.title
         holder.snippet.text = article.snippet
-        holder.sentiment.text = article.sentiment
-        holder.sentiment.setBackgroundColor(getSentimentColor(article.sentiment))
+        holder.timeToRead.text = context.getString(R.string.time_to_read_format, article.timeToRead)
         holder.share.setOnClickListener {
             // TODO: Make this use the newer share menu in Android
             //       instead of having it fall back to the old share
@@ -59,7 +59,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         val title: TextView = itemView.title
         val snippet: TextView = itemView.snippet
         val photo: ImageView = itemView.photo
-        val sentiment: TextView = itemView.sentiment
+        val timeToRead: TextView = itemView.timeToRead
         val share: ImageView = itemView.share
     }
 }

@@ -6,5 +6,6 @@ data class Article(
     val snippet: String,
     val index: Int,
     val url: String,
+    val timeToRead: Int,
     val sentiment: String
 )
