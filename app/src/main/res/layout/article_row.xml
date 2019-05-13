@@ -72,24 +72,19 @@
             app:layout_constraintTop_toBottomOf="@id/snippet"
             android:contentDescription="@string/share_button" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
 
             <TextView
-                android:id="@+id/sentiment"
+                android:id="@+id/timeToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textColor="#000" />
-
-        </androidx.cardview.widget.CardView>
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="11dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textColor="#222222"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="14sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
