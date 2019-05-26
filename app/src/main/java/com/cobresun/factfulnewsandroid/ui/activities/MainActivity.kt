@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.cobresun.factfulnewsandroid.BuildConfig
 import com.cobresun.factfulnewsandroid.CategoryUtils
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         AppCenter.start(
-            application, "40e7957a-3008-49b7-af7b-5bf1be103ad5",
+            application, BuildConfig.AppCenterAPIKey,
             Analytics::class.java, Crashes::class.java, Distribute::class.java
         )
 
