@@ -8,6 +8,11 @@ import com.cobresun.factfulnewsandroid.CategoryUtils
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
+import com.microsoft.appcenter.distribute.Distribute
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +21,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        AppCenter.start(
+            application, "40e7957a-3008-49b7-af7b-5bf1be103ad5",
+            Analytics::class.java, Crashes::class.java, Distribute::class.java
+        )
 
 
         // Create an instance of the tab layout from the view.
