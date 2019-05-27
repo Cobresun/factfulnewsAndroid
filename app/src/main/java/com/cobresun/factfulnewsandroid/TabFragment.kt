@@ -16,7 +16,6 @@ import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
 import com.cobresun.factfulnewsandroid.backend.models.Article
 import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
-import com.microsoft.appcenter.analytics.Analytics
 import kotlinx.android.synthetic.main.tab_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -71,7 +70,6 @@ class TabFragment(index: Int) : Fragment() {
 
     private fun showArticles(articles: List<Article>) {
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-            Analytics.trackEvent("Article Viewed")
             // The URL belonging to the selected article.
             val articleUrl = articles[position].url
             // Initialize the Custom Tabs Intent Builder.
