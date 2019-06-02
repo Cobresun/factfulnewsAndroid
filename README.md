@@ -3,6 +3,9 @@
         height="80"
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
 </a>
+<p align="center">
+  <img width="300" height="300" src="https://lh3.googleusercontent.com/P9x1zt6kMvG1K849Afqm2gNjPW5dlwU6eNuIFvpWCFEcujLZXqU-faRESHt0HsDnen4=s360-rw">
+</p>
 
 # Factfulnews
 Kotlin Android Native app for Factfulnews
