@@ -2,8 +2,42 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="darkMode"
-        app:title="Enable dark mode" />
+    <PreferenceCategory
+        app:key="appearance"
+        app:title="Appearance">
+
+        <SwitchPreferenceCompat
+            app:key="darkMode"
+            app:title="Enable dark mode" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="categories_category"
+        app:title="Categories">
+
+        <CheckBoxPreference
+            app:key="category_general"
+            app:title="General Tab" />
+        <CheckBoxPreference
+            app:key="category_business"
+            app:title="Business Tab" />
+        <CheckBoxPreference
+            app:key="category_entertainment"
+            app:title="Entertainment Tab" />
+        <CheckBoxPreference
+            app:key="category_health"
+            app:title="Health Tab" />
+        <CheckBoxPreference
+            app:key="category_science"
+            app:title="Science Tab" />
+        <CheckBoxPreference
+            app:key="category_sports"
+            app:title="Sports Tab" />
+        <CheckBoxPreference
+            app:key="category_technology"
+            app:title="Technology Tab" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
