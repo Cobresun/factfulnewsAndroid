@@ -18,25 +18,32 @@
 
         <CheckBoxPreference
             app:key="category_general"
-            app:title="General Tab" />
+            app:title="General Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_business"
-            app:title="Business Tab" />
+            app:title="Business Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_entertainment"
-            app:title="Entertainment Tab" />
+            app:title="Entertainment Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_health"
-            app:title="Health Tab" />
+            app:title="Health Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_science"
-            app:title="Science Tab" />
+            app:title="Science Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_sports"
-            app:title="Sports Tab" />
+            app:title="Sports Tab"
+            app:defaultValue="true"/>
         <CheckBoxPreference
             app:key="category_technology"
-            app:title="Technology Tab" />
+            app:title="Technology Tab"
+            app:defaultValue="true"/>
 
     </PreferenceCategory>
 
