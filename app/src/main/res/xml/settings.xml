@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:key="filters_category"
+        app:title="Filters">
+
+    <SeekBarPreference
+        android:key = "read_time"
+        android:title = "Read Time"
+        android:summary = "Adjust maximum read time (in minutes)"
+        android:defaultValue = "30"
+        android:min = "0"
+        android:max = "30" />
+
+    <SwitchPreference
+        app:key="sentiment_switch"
+        app:title="Sentiment Filter"
+        app:summary="Filter by Positive/Negative news ratio"
+        app:defaultValue="false"/>
+
+        <SeekBarPreference
+            android:key = "sentiment_ratio"
+            android:title = "Sentiment Ratio"
+            android:dependency="sentiment_switch"
+            android:summary = "Percent of positive/negative news"
+            android:defaultValue = "50"
+            android:min = "0"
+            android:max = "100" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="categories_category"
+        app:title="Categories">
+
+        <CheckBoxPreference
+            app:key="category_general"
+            app:title="General Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_business"
+            app:title="Business Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_entertainment"
+            app:title="Entertainment Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_health"
+            app:title="Health Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_science"
+            app:title="Science Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_sports"
+            app:title="Sports Tab"
+            app:defaultValue="true"/>
+        <CheckBoxPreference
+            app:key="category_technology"
+            app:title="Technology Tab"
+            app:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
