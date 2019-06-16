@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.cobresun.factfulnewsandroid.CategoryUtils
+import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayout
@@ -24,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         // Create an instance of the tab layout from the view.
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Set the text for each tab.
-        for(title in CategoryUtils.categories){
+        var categories = SharedPrefsUserDataRepository(this).readUserCategories()
+
+        for(title in categories){
             tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
         }
         // Set the tabs to fill the entire layout.
