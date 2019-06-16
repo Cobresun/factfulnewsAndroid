@@ -11,6 +11,9 @@ class SharedPrefsUserDataRepository(private val context: Context) : UserDataRepo
     override fun readUserCategories(): Array<String> {
         val settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         var categories =  settings.getStringSet("userCategories", CategoryUtils.categories.toSet())
+        if(categories == null) {
+            categories = CategoryUtils.categories.toSet()
+        }
         return categories.toTypedArray()
     }
 
