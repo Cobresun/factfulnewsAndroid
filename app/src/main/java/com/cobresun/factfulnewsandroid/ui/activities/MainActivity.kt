@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Set the text for each tab.
         var categories = SharedPrefsUserDataRepository(this).readUserCategories()
-
         for(title in categories){
             tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
         }
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // Each page is represented by its own fragment.
         val viewPager = findViewById<ViewPager>(R.id.pager)
 
-        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, tabLayout.tabCount)
+        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount)
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 

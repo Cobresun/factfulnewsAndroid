@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
 import com.cobresun.factfulnewsandroid.backend.models.Article
+import com.cobresun.factfulnewsandroid.ui.activities.MainActivity
 import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
 import kotlinx.android.synthetic.main.tab_fragment.*
 import retrofit2.Call
@@ -24,8 +25,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
-class TabFragment(index: Int) : Fragment() {
-    var tabIndex = index
+class TabFragment(title: String) : Fragment() {
+    var tabTitle = title
     var articles : List<Article>? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,7 +48,7 @@ class TabFragment(index: Int) : Fragment() {
         // Initialize and display articles from api response on first run only
         if(articles == null) {
             val api = retrofit.create(ApiService::class.java)
-            api.fetchArticles(CategoryUtils.categories[tabIndex]).enqueue(object : Callback<FetchResponse> {
+            api.fetchArticles(tabTitle).enqueue(object : Callback<FetchResponse> {
                 override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
                     if (response.body() != null) {
                         response.body()?.let { articles = it.articles }
