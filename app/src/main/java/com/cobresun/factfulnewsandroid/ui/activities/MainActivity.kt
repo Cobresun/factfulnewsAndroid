@@ -21,7 +21,10 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        setupTabLayout()
+    }
 
+    fun setupTabLayout(){
         // Create an instance of the tab layout from the view.
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Set the text for each tab.

@@ -4,5 +4,5 @@ interface UserDataRepository {
 
     fun readUserCategories(): Array<String>
 
-    fun writeUserCategories(categories: Array<String>)
+    fun writeUserCategories(category: String, enabled: Boolean)
 }
