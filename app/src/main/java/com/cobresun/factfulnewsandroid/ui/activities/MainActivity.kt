@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         // Create an instance of the tab layout from the view.
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Set the text for each tab.
-        var categories = SharedPrefsUserDataRepository(this).readUserCategories()
+        val categories = SharedPrefsUserDataRepository(this).readUserCategories()
         for(title in categories){
             tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
         }
@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item != null) {
             if (item.itemId == R.id.action_setting) {
-                var settingsScreen: SettingsActivity = SettingsActivity()
-                val intent = Intent(this, settingsScreen::class.java)
+                val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
                 return true
             }
