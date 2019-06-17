@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
-import com.cobresun.factfulnewsandroid.CategoryUtils
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
@@ -62,7 +61,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item != null) {
             if (item.itemId == R.id.action_setting) {
-                val intent = Intent(this, SettingsActivity::class.java)
+                var settingsScreen: SettingsActivity = SettingsActivity()
+                val intent = Intent(this, settingsScreen::class.java)
                 startActivity(intent)
                 return true
             }
