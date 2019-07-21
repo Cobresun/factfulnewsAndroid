@@ -7,7 +7,7 @@ import android.content.Intent
 
 
 
-class SettingsActivity() : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager
