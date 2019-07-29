@@ -6,9 +6,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
-import com.cobresun.factfulnewsandroid.ui.activities.MainActivity
 
-open class SettingsFragment() : PreferenceFragmentCompat() {
+open class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
