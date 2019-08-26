@@ -1,6 +1,7 @@
 package com.cobresun.factfulnewsandroid.repositories.impl
 
 import android.content.Context
+import android.preference.PreferenceManager
 import com.cobresun.factfulnewsandroid.CategoryUtils
 import com.cobresun.factfulnewsandroid.repositories.UserDataRepository
 
@@ -27,5 +28,11 @@ class SharedPrefsUserDataRepository(private val context: Context) : UserDataRepo
         val editor = settings.edit()
         editor.putBoolean(category, enabled)
         editor.apply()
+    }
+
+    override fun readUserReadTime(): Int {
+        val settings = PreferenceManager.getDefaultSharedPreferences(context)
+
+        return settings.getInt("read_time", 30)
     }
 }

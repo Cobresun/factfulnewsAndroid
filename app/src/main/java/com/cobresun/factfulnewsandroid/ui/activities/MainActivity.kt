@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
+import com.cobresun.factfulnewsandroid.models.Settings
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         for(title in categories){
             tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
         }
+
+        val readTime = SharedPrefsUserDataRepository(this).readUserReadTime()
+
+        val settings = Settings(readTime)
         // Set the tabs to fill the entire layout.
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         // Each page is represented by its own fragment.
         val viewPager = findViewById<ViewPager>(R.id.pager)
 
-        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount)
+        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, settings)
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
