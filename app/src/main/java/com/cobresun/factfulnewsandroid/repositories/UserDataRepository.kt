@@ -5,4 +5,6 @@ interface UserDataRepository {
     fun readUserCategories(): Array<String>
 
     fun writeUserCategories(category: String, enabled: Boolean)
+
+    fun readUserReadTime(): Int
 }

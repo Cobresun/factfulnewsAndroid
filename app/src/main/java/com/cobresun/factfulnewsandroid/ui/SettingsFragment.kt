@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 
@@ -11,6 +12,7 @@ open class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+        val readTimePreference: SeekBarPreference? = findPreference("read_time") as SeekBarPreference
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {

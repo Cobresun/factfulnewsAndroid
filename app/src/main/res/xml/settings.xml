@@ -2,17 +2,17 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<PreferenceCategory-->
-        <!--app:key="filters_category"-->
-        <!--app:title="Filters">-->
+    <PreferenceCategory
+        app:key="filters_category"
+        app:title="Filters">
 
-    <!--<SeekBarPreference-->
-        <!--android:key = "read_time"-->
-        <!--android:title = "Read Time"-->
-        <!--android:summary = "Adjust maximum read time (in minutes)"-->
-        <!--android:defaultValue = "30"-->
-        <!--android:min = "0"-->
-        <!--android:max = "30" />-->
+    <SeekBarPreference
+        android:key = "read_time"
+        android:title = "Read Time"
+        android:summary = "Adjust maximum read time (in minutes)"
+        android:defaultValue = "30"
+        android:min = "0"
+        android:max = "30" />
 
     <!--<SwitchPreference-->
         <!--app:key="sentiment_switch"-->
@@ -29,7 +29,7 @@
             <!--android:min = "0"-->
             <!--android:max = "100" />-->
 
-    <!--</PreferenceCategory>-->
+    </PreferenceCategory>
 
     <PreferenceCategory
         app:key="categories_category"
