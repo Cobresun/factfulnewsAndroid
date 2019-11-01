@@ -1,7 +1,5 @@
 package com.cobresun.factfulnewsandroid
 
-
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +14,6 @@ import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
 import com.cobresun.factfulnewsandroid.backend.models.Article
 import com.cobresun.factfulnewsandroid.models.Settings
-import com.cobresun.factfulnewsandroid.ui.activities.MainActivity
 import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
 import kotlinx.android.synthetic.main.tab_fragment.*
 import retrofit2.Call
@@ -27,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 class TabFragment(title: String, settings: Settings) : Fragment() {
-    var tabTitle = title
-    var readTime = settings.readTime
+    private var tabTitle = title
+    private var readTime = settings.readTime
     var originalArticles : List<Article>? = null
     var articles : List<Article>? = null
 
@@ -98,7 +95,7 @@ class TabFragment(title: String, settings: Settings) : Fragment() {
     }
 
     private fun pruneArticles(fullList: List<Article>): List<Article> {
-        var shortList = fullList.toMutableList()
+        val shortList = fullList.toMutableList()
 
         for (article in fullList) {
             if (article.timeToRead > readTime) {
