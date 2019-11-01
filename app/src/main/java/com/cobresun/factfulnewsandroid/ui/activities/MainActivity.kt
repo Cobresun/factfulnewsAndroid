@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setupTabLayout()
     }
 
-    fun setupTabLayout(){
+    private fun setupTabLayout(){
         // Create an instance of the tab layout from the view.
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Set the text for each tab.
@@ -63,13 +63,11 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item != null) {
-            if (item.itemId == R.id.action_setting) {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-                return true
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_setting) {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            return true
         }
         return super.onOptionsItemSelected(item)
     }

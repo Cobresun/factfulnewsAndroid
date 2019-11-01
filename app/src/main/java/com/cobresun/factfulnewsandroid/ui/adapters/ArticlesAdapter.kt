@@ -2,8 +2,6 @@ package com.cobresun.factfulnewsandroid.ui.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cobresun.factfulnewsandroid.backend.models.Article
 import com.cobresun.factfulnewsandroid.R
+import com.cobresun.factfulnewsandroid.backend.models.Article
 import kotlinx.android.synthetic.main.article_row.view.*
 
 class ArticlesAdapter(private val context: Context, private val articles: List<Article>,
@@ -45,14 +43,6 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         }
 
         Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
-    }
-
-    private fun getSentimentColor(sentiment: String): Int{
-        return when (sentiment) {
-            "Negative" -> Color.parseColor("#ffaaaa")
-            "Positive" -> Color.parseColor("#aaffaa")
-            else -> Color.parseColor("#aaaaff")
-        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
