@@ -12,7 +12,7 @@ open class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        val readTimePreference: SeekBarPreference? = findPreference("read_time") as SeekBarPreference
+        val readTimePreference: SeekBarPreference? = findPreference("read_time")
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
