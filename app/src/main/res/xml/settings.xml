@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:key="filters_category"
         app:title="Filters">
 
-    <SeekBarPreference
-        android:key = "read_time"
-        android:title = "Read Time"
-        android:summary = "Adjust maximum read time (in minutes)"
-        android:defaultValue = "30"
-        android:min = "0"
-        android:max = "30" />
-
-    <!--<SwitchPreference-->
-        <!--app:key="sentiment_switch"-->
-        <!--app:title="Sentiment Filter"-->
-        <!--app:summary="Filter by Positive/Negative news ratio"-->
-        <!--app:defaultValue="false"/>-->
-
-        <!--<SeekBarPreference-->
-            <!--android:key = "sentiment_ratio"-->
-            <!--android:title = "Sentiment Ratio"-->
-            <!--android:dependency="sentiment_switch"-->
-            <!--android:summary = "Percent of positive/negative news"-->
-            <!--android:defaultValue = "50"-->
-            <!--android:min = "0"-->
-            <!--android:max = "100" />-->
+        <SeekBarPreference
+            android:defaultValue="30"
+            android:key="read_time"
+            android:max="30"
+            android:min="0"
+            android:summary="Adjust maximum read time (in minutes)"
+            android:title="Read Time"
+            app:showSeekBarValue="true" />
 
     </PreferenceCategory>
 
@@ -36,33 +22,33 @@
         app:title="Categories">
 
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_general"
-            app:title="General Tab"
-            app:defaultValue="true"/>
+            app:title="General Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_business"
-            app:title="Business Tab"
-            app:defaultValue="true"/>
+            app:title="Business Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_entertainment"
-            app:title="Entertainment Tab"
-            app:defaultValue="true"/>
+            app:title="Entertainment Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_health"
-            app:title="Health Tab"
-            app:defaultValue="true"/>
+            app:title="Health Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_science"
-            app:title="Science Tab"
-            app:defaultValue="true"/>
+            app:title="Science Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_sports"
-            app:title="Sports Tab"
-            app:defaultValue="true"/>
+            app:title="Sports Tab" />
         <CheckBoxPreference
+            app:defaultValue="true"
             app:key="category_technology"
-            app:title="Technology Tab"
-            app:defaultValue="true"/>
+            app:title="Technology Tab" />
 
     </PreferenceCategory>
 
