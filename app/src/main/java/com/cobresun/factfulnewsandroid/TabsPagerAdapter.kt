@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class TabsPagerAdapter(
     fragmentActivity: FragmentActivity,
-    private val categories: Array<String>
+    private val categories: List<String>
 ): FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int = categories.size
 
