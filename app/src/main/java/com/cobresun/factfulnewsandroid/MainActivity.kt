@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
+import com.cobresun.factfulnewsandroid.tabs.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 

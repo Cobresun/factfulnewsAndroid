@@ -1,5 +1,6 @@
-package com.cobresun.factfulnewsandroid.backend.api
+package com.cobresun.factfulnewsandroid.backend
 
+import com.cobresun.factfulnewsandroid.backend.models.FetchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

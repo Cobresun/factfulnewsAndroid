@@ -1,8 +1,8 @@
 package com.cobresun.factfulnewsandroid.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.content.Intent
 import com.cobresun.factfulnewsandroid.MainActivity
 
 
@@ -11,9 +11,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportFragmentManager
             .beginTransaction()
-            .replace(android.R.id.content,
-                SettingsFragment()
-            )
+            .replace(android.R.id.content, SettingsFragment())
             .commit()
     }
 

@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid
+package com.cobresun.factfulnewsandroid.tabs
 
 import android.content.Intent
 import android.net.Uri
@@ -11,9 +11,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cobresun.factfulnewsandroid.backend.api.ApiService
-import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
+import com.cobresun.factfulnewsandroid.ArticlesAdapter
+import com.cobresun.factfulnewsandroid.R
+import com.cobresun.factfulnewsandroid.backend.ApiService
 import com.cobresun.factfulnewsandroid.backend.models.Article
+import com.cobresun.factfulnewsandroid.backend.models.FetchResponse
 import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
 import kotlinx.android.synthetic.main.tab_fragment.*
 import kotlinx.coroutines.*
