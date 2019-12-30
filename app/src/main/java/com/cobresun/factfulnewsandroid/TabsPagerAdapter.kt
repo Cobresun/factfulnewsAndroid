@@ -1,26 +1,23 @@
 package com.cobresun.factfulnewsandroid
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class TabsPagerAdapter(
-    fragmentManager: FragmentManager,
-    private val tabTitles: Array<String>,
-    private val numCategories: Int,
+    fragmentActivity: FragmentActivity,
+    private val categories: Array<String>,
     private val readTime: Int
-): FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    private val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(numCategories)
+): FragmentStateAdapter(fragmentActivity) {
+    private val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(categories.size)
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItemCount(): Int = categories.size
+
+    override fun createFragment(position: Int): Fragment {
         if (tabsCache[position] == null) {
-            tabsCache[position] = TabFragment.newInstance(tabTitles[position], readTime)
+            tabsCache[position] = TabFragment.newInstance(categories[position], readTime)
         }
 
-        return tabsCache[position] ?: TabFragment.newInstance(tabTitles[position], readTime)
-    }
-
-    override fun getCount(): Int {
-        return numCategories
+        return tabsCache[position] ?: TabFragment.newInstance(categories[position], readTime)
     }
 }

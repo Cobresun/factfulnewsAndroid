@@ -24,18 +24,18 @@ import kotlin.coroutines.CoroutineContext
 class TabFragment : Fragment(), CoroutineScope {
 
     companion object {
-        private const val TAB_TITLE = "tab_title"
+        private const val TAB_CATEGORY = "tab_category"
         private const val READ_TIME = "read_time"
 
-        fun newInstance(title: String, readTime: Int) = TabFragment().apply {
+        fun newInstance(category: String, readTime: Int) = TabFragment().apply {
             arguments = bundleOf(
-                TAB_TITLE to title,
+                TAB_CATEGORY to category,
                 READ_TIME to readTime
             )
         }
     }
 
-    private val tabTitle: String by lazy { arguments?.getString(TAB_TITLE) ?: "" }
+    private val tabCategory: String by lazy { arguments?.getString(TAB_CATEGORY) ?: "" }
     private val readTime: Int by lazy { arguments?.getInt(READ_TIME) ?: 0 }
 
     private lateinit var mJob: Job
@@ -86,7 +86,7 @@ class TabFragment : Fragment(), CoroutineScope {
         if (articles == null) {
             mJob = Job()
             launch(coroutineExceptionHandler) {
-                val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
+                val fetchResponse: FetchResponse = apiService.fetchArticles(tabCategory)
                 articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
                 articles?.let { showArticles(it) }
             }

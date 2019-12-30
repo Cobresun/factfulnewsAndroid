@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,20 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        viewPager.apply {
-            adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, readTime)
-            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-        }
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager.currentItem = tab.position
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
+        viewPager.adapter = TabsPagerAdapter(this, categories, readTime)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = categories[position]
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
