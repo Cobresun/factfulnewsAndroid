@@ -19,10 +19,5 @@ Features:
 - Simply, easy to use, minimalist interface.
 - Browse what's most important in the world, not just what's personalized to you
 
-Coming soon:
-- Imbedded, simple article reader, for low data usage and minimalist design
-- Check the facts of statements right inside the article
-- Much more!
-
 ## Download on Google Play
 [Download app here](https://play.google.com/store/apps/details?id=com.cobresun.factfulnewsandroid). 
