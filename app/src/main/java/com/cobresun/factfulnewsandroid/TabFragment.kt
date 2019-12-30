@@ -15,12 +15,10 @@ import com.cobresun.factfulnewsandroid.backend.models.Article
 import com.cobresun.factfulnewsandroid.models.Settings
 import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
 import kotlinx.android.synthetic.main.tab_fragment.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 // TODO: IDK how we wrote this code lol Fragment with parameters yikes - crashes on rotation
@@ -29,6 +27,10 @@ class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScop
     private lateinit var mJob: Job
     override val coroutineContext: CoroutineContext
         get() = mJob + Dispatchers.Main
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Timber.e("Coroutine Exception", ":${throwable.localizedMessage}")
+    }
 
     private val tabTitle = title
     private val readTime = settings.readTime
@@ -54,7 +56,7 @@ class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScop
         if (articles == null) {
             val apiService = retrofit.create(ApiService::class.java)
             mJob = Job()
-            launch {
+            launch(coroutineExceptionHandler) {
                 val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
                 articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
                 articles?.let { showArticles(it) }
@@ -86,8 +88,8 @@ class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScop
         }
 
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ArticlesAdapter(context, articles, itemOnClick)
+            adapter = ArticlesAdapter(requireContext(), articles, itemOnClick)
+            layoutManager = LinearLayoutManager(requireActivity())
         }
     }
 }

@@ -7,7 +7,8 @@ import com.cobresun.factfulnewsandroid.models.Settings
 
 class TabsPagerAdapter(
     fragmentManager: FragmentManager,
-    private val tabTitles: Array<String>, private val numCategories: Int,
+    private val tabTitles: Array<String>,
+    private val numCategories: Int,
     private val settings: Settings
 ): FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     private val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(numCategories)

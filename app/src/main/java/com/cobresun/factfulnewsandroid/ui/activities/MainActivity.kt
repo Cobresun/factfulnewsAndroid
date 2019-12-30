@@ -5,46 +5,35 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
-import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.TabsPagerAdapter
 import com.cobresun.factfulnewsandroid.models.Settings
+import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         setupTabLayout()
     }
 
     private fun setupTabLayout(){
-        // Create an instance of the tab layout from the view.
-        val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-        // Set the text for each tab.
-        val categories = SharedPrefsUserDataRepository(this).readUserCategories()
-        for(title in categories){
+        val categories = SharedPrefsUserDataRepository(applicationContext).readUserCategories()
+        for (title in categories) {
             tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
         }
 
-        val readTime = SharedPrefsUserDataRepository(this).readUserReadTime()
+        val readTime = SharedPrefsUserDataRepository(applicationContext).readUserReadTime()
 
         val settings = Settings(readTime)
-        // Set the tabs to fill the entire layout.
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        // Use PagerAdapter to manage page views in fragments.
-        // Each page is represented by its own fragment.
-        val viewPager = findViewById<ViewPager>(R.id.pager)
-
         viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, settings)
-
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -65,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_setting) {
-            val intent = Intent(this, SettingsActivity::class.java)
+            val intent = Intent(applicationContext, SettingsActivity::class.java)
             startActivity(intent)
             return true
         }

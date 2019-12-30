@@ -15,12 +15,9 @@ open class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         if (preference.key.startsWith("category_")){
-            val thisContext = context
-            if (thisContext != null) {
-                val prefs = SharedPrefsUserDataRepository(thisContext)
-                val newVal = (preference as CheckBoxPreference).isChecked
-                prefs.writeUserCategories(preference.key, newVal)
-            }
+            val prefs = SharedPrefsUserDataRepository(requireContext())
+            val newVal = (preference as CheckBoxPreference).isChecked
+            prefs.writeUserCategories(preference.key, newVal)
         }
         return super.onPreferenceTreeClick(preference)
     }
