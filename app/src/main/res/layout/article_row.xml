@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="#ffffff">
+    android:foreground="?android:attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,12 +33,11 @@
             android:padding="4dp"
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
-            android:textColor="#232F34"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/photo" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/snippet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +48,6 @@
             android:fontFamily="@font/rubik_medium"
             android:maxLines="3"
             android:padding="4dp"
-            android:textColor="#606669"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@id/snippet" />
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/timeToRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,11 +77,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="11dp"
             android:fontFamily="@font/rubik_medium"
-            android:textColor="#222222"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

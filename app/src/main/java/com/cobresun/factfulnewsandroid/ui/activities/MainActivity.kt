@@ -22,11 +22,9 @@ class MainActivity : AppCompatActivity() {
         setupTabLayout()
     }
 
-    private fun setupTabLayout(){
+    private fun setupTabLayout() {
         val categories = SharedPrefsUserDataRepository(applicationContext).readUserCategories()
-        for (title in categories) {
-            tabLayout.addTab(tabLayout.newTab().setText(title.capitalize()))
-        }
+        categories.forEach { tabLayout.addTab(tabLayout.newTab().setText(it.capitalize())) }
 
         val readTime = SharedPrefsUserDataRepository(applicationContext).readUserReadTime()
 
