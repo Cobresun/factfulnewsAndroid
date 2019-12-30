@@ -14,8 +14,8 @@ class SharedPrefsUserDataRepository(private val context: Context) : UserDataRepo
         val defaultCategories = CategoryUtils.categories
         val userCategories: MutableList<String> = ArrayList()
 
-        for(category in defaultCategories){
-            if(userPreferences.getBoolean("category_$category", true)){
+        for (category in defaultCategories) {
+            if (userPreferences.getBoolean("category_$category", true)) {
                 userCategories.add(category)
             }
         }

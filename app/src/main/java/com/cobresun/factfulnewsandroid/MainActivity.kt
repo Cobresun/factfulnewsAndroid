@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,19 +16,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
         setupTabLayout()
     }
 
     private fun setupTabLayout() {
         val categories = SharedPrefsUserDataRepository(applicationContext).readUserCategories()
-        categories.forEach { tabLayout.addTab(tabLayout.newTab().setText(it.capitalize())) }
-
-        val readTime = SharedPrefsUserDataRepository(applicationContext).readUserReadTime()
-
-        tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-
-        viewPager.adapter = TabsPagerAdapter(this, categories, readTime)
+        viewPager.adapter = TabsPagerAdapter(this, categories)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = categories[position]
         }.attach()

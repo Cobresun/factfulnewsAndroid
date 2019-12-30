@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
 import com.cobresun.factfulnewsandroid.backend.models.Article
+import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
 import kotlinx.android.synthetic.main.tab_fragment.*
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -25,18 +26,16 @@ class TabFragment : Fragment(), CoroutineScope {
 
     companion object {
         private const val TAB_CATEGORY = "tab_category"
-        private const val READ_TIME = "read_time"
 
-        fun newInstance(category: String, readTime: Int) = TabFragment().apply {
+        fun newInstance(category: String) = TabFragment().apply {
             arguments = bundleOf(
-                TAB_CATEGORY to category,
-                READ_TIME to readTime
+                TAB_CATEGORY to category
             )
         }
     }
 
     private val tabCategory: String by lazy { arguments?.getString(TAB_CATEGORY) ?: "" }
-    private val readTime: Int by lazy { arguments?.getInt(READ_TIME) ?: 0 }
+    private val readTime: Int by lazy { SharedPrefsUserDataRepository(requireContext()).readUserReadTime() }
 
     private lateinit var mJob: Job
     override val coroutineContext: CoroutineContext

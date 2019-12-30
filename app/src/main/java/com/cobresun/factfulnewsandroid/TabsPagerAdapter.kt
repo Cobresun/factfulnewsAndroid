@@ -6,18 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class TabsPagerAdapter(
     fragmentActivity: FragmentActivity,
-    private val categories: Array<String>,
-    private val readTime: Int
+    private val categories: Array<String>
 ): FragmentStateAdapter(fragmentActivity) {
-    private val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(categories.size)
-
     override fun getItemCount(): Int = categories.size
 
-    override fun createFragment(position: Int): Fragment {
-        if (tabsCache[position] == null) {
-            tabsCache[position] = TabFragment.newInstance(categories[position], readTime)
-        }
-
-        return tabsCache[position] ?: TabFragment.newInstance(categories[position], readTime)
-    }
+    override fun createFragment(position: Int): Fragment = TabFragment.newInstance(categories[position])
 }
