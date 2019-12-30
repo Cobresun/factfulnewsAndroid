@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid.ui.adapters
+package com.cobresun.factfulnewsandroid
 
 import android.content.Context
 import android.content.Intent
@@ -9,12 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.backend.models.Article
 import kotlinx.android.synthetic.main.article_row.view.*
 
-class ArticlesAdapter(private val context: Context, private val articles: List<Article>,
-                      private val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
+class ArticlesAdapter(
+    private val context: Context,
+    private val articles: List<Article>,
+    private val itemClickListener: (View, Int, Int) -> Unit
+) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_row, parent, false)
@@ -40,10 +42,11 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
             context.startActivity(shareIntent)
         }
 
-        Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width).into(holder.photo)
+        Glide.with(context).load(articles[position].urlToImage).override(holder.photo.width)
+            .into(holder.photo)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.title
         val snippet: TextView = itemView.snippet
         val photo: ImageView = itemView.photo
@@ -52,7 +55,7 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
     }
 }
 
-fun <T: RecyclerView.ViewHolder> T.onClick(event: (view: View, position: Int, type: Int) -> Unit): T {
+fun <T : RecyclerView.ViewHolder> T.onClick(event: (view: View, position: Int, type: Int) -> Unit): T {
     itemView.setOnClickListener {
         event.invoke(it, adapterPosition, itemViewType)
     }

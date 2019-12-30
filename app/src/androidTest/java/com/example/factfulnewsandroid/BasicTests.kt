@@ -12,7 +12,7 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.cobresun.factfulnewsandroid.R
 import androidx.test.espresso.contrib.RecyclerViewActions
-import com.cobresun.factfulnewsandroid.ui.activities.MainActivity
+import com.cobresun.factfulnewsandroid.MainActivity
 import org.junit.Test
 
 @RunWith(AndroidJUnit4::class)

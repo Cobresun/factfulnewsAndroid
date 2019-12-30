@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid.ui
+package com.cobresun.factfulnewsandroid.settings
 
 import android.os.Bundle
 import androidx.preference.CheckBoxPreference

@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.backend.api.ApiService
 import com.cobresun.factfulnewsandroid.backend.api.FetchResponse
 import com.cobresun.factfulnewsandroid.backend.models.Article
-import com.cobresun.factfulnewsandroid.models.Settings
-import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
 import kotlinx.android.synthetic.main.tab_fragment.*
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -21,11 +20,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-// TODO: IDK how we wrote this code lol... Fragment with parameters yikes - crashes on rotation
-class TabFragment(
-    private val title: String,
-    private val settings: Settings
-) : Fragment(), CoroutineScope {
+class TabFragment : Fragment(), CoroutineScope {
+
+    companion object {
+        private const val TAB_TITLE = "tab_title"
+        private const val READ_TIME = "read_time"
+
+        fun newInstance(title: String, readTime: Int) = TabFragment().apply {
+            arguments = bundleOf(
+                TAB_TITLE to title,
+                READ_TIME to readTime
+            )
+        }
+    }
+
+    private val tabTitle: String by lazy { arguments?.getString(TAB_TITLE) ?: "" }
+    private val readTime: Int by lazy { arguments?.getInt(READ_TIME) ?: 0 }
 
     private lateinit var mJob: Job
     override val coroutineContext: CoroutineContext
@@ -58,8 +68,8 @@ class TabFragment(
             val apiService = retrofit.create(ApiService::class.java)
             mJob = Job()
             launch(coroutineExceptionHandler) {
-                val fetchResponse: FetchResponse = apiService.fetchArticles(title)
-                articles = fetchResponse.articles.filter { it.timeToRead <= settings.readTime }
+                val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
+                articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
                 articles?.let { showArticles(it) }
             }
         }
@@ -89,7 +99,11 @@ class TabFragment(
         }
 
         recyclerView.apply {
-            adapter = ArticlesAdapter(requireContext(), articles, itemOnClick)
+            adapter = ArticlesAdapter(
+                requireContext(),
+                articles,
+                itemOnClick
+            )
             layoutManager = LinearLayoutManager(requireActivity())
         }
     }

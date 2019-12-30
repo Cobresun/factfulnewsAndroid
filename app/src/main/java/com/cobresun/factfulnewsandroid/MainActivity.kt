@@ -1,14 +1,12 @@
-package com.cobresun.factfulnewsandroid.ui.activities
+package com.cobresun.factfulnewsandroid
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.cobresun.factfulnewsandroid.R
-import com.cobresun.factfulnewsandroid.TabsPagerAdapter
-import com.cobresun.factfulnewsandroid.models.Settings
 import com.cobresun.factfulnewsandroid.repositories.impl.SharedPrefsUserDataRepository
+import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,10 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         val readTime = SharedPrefsUserDataRepository(applicationContext).readUserReadTime()
 
-        val settings = Settings(readTime)
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, settings)
+        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, readTime)
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
