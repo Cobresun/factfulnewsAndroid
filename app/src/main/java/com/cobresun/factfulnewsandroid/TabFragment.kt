@@ -1,5 +1,6 @@
 package com.cobresun.factfulnewsandroid
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,30 +43,47 @@ class TabFragment : Fragment(), CoroutineScope {
         get() = mJob + Dispatchers.Main
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.e("Coroutine Exception", ":${throwable.localizedMessage}")
+        Timber.e("Coroutine Exception", ":$throwable")
+    }
+
+    private val apiService = Retrofit
+        .Builder()
+        .baseUrl("https://factfulnews.herokuapp.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ApiService::class.java)
+
+    private val articleClickListener: (Article) -> Unit = {
+        CustomTabsIntent
+            .Builder()
+            .setShowTitle(true)
+            .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+            .build()
+            .launchUrl(requireContext(), Uri.parse(it.url))
+    }
+
+    private val articleShareClickListener: (Article) -> Unit = {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, it.title + "\n\n" + it.url)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        requireContext().startActivity(shareIntent)
     }
 
     private var articles: List<Article>? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: This feels like something a ViewModel should do!
-        if (activity != null) {
-            articles?.let { showArticles(it) }
-        }
+        articles?.let { showArticles(it) }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://factfulnews.herokuapp.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
         if (articles == null) {
-            val apiService = retrofit.create(ApiService::class.java)
             mJob = Job()
             launch(coroutineExceptionHandler) {
                 val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
@@ -73,7 +91,6 @@ class TabFragment : Fragment(), CoroutineScope {
                 articles?.let { showArticles(it) }
             }
         }
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
 
@@ -83,28 +100,14 @@ class TabFragment : Fragment(), CoroutineScope {
     }
 
     private fun showArticles(articles: List<Article>) {
-        val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-            val articleUrl = articles[position].url
-            val ctBuilder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
-            ctBuilder.setShowTitle(true)
-            ctBuilder.setToolbarColor(
-                ResourcesCompat.getColor(
-                    resources,
-                    R.color.colorPrimary,
-                    null
-                )
-            )
-            val ctIntent: CustomTabsIntent = ctBuilder.build()
-            ctIntent.launchUrl(requireContext(), Uri.parse(articleUrl))
-        }
-
         recyclerView.apply {
             adapter = ArticlesAdapter(
-                requireContext(),
-                articles,
-                itemOnClick
+                context = requireContext(),
+                articles = articles,
+                clickListener = articleClickListener,
+                shareClickListener = articleShareClickListener
             )
-            layoutManager = LinearLayoutManager(requireActivity())
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 }

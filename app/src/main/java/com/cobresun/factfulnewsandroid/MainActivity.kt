@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        viewPager.adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, readTime)
-        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        viewPager.apply {
+            adapter = TabsPagerAdapter(supportFragmentManager, categories, tabLayout.tabCount, readTime)
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
