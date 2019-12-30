@@ -1,7 +1,6 @@
-package com.cobresun.factfulnewsandroid.backend
+package com.cobresun.factfulnewsandroid
 
 import android.app.Application
-import com.cobresun.factfulnewsandroid.BuildConfig
 import timber.log.Timber
 
 class FactfulApplication: Application() {

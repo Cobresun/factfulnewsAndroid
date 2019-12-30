@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -16,22 +15,29 @@ import com.cobresun.factfulnewsandroid.backend.models.Article
 import com.cobresun.factfulnewsandroid.models.Settings
 import com.cobresun.factfulnewsandroid.ui.adapters.ArticlesAdapter
 import kotlinx.android.synthetic.main.tab_fragment.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
-class TabFragment(title: String, settings: Settings) : Fragment() {
-    private var tabTitle = title
-    private var readTime = settings.readTime
-    var originalArticles : List<Article>? = null
-    var articles : List<Article>? = null
+// TODO: IDK how we wrote this code lol Fragment with parameters yikes - crashes on rotation
+class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScope {
+
+    private lateinit var mJob: Job
+    override val coroutineContext: CoroutineContext
+        get() = mJob + Dispatchers.Main
+
+    private val tabTitle = title
+    private val readTime = settings.readTime
+    private var articles: List<Article>? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(activity != null){               // Afterwards keep displaying already initialized articles
+        // TODO: This feels like something a ViewModel should do!
+        if (activity != null) {
             articles?.let { showArticles(it) }
         }
     }
@@ -45,64 +51,43 @@ class TabFragment(title: String, settings: Settings) : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        // Initialize and display articles from api response on first run only
-        if(articles == null) {
-            val api = retrofit.create(ApiService::class.java)
-            api.fetchArticles(tabTitle).enqueue(object : Callback<FetchResponse> {
-                override fun onResponse(call: Call<FetchResponse>, response: Response<FetchResponse>) {
-                    if (response.body() != null) {
-                        response.body()?.let { originalArticles = it.articles; articles = pruneArticles(it.articles) }
-                        if (recyclerView != null) {
-                            articles?.let { showArticles(it) }
-                        }
-                    } else {
-                        Toast.makeText(context, "Error Fetching response!", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<FetchResponse>, t: Throwable) {
-                    Timber.d(t.toString())
-                }
-            })
+        if (articles == null) {
+            val apiService = retrofit.create(ApiService::class.java)
+            mJob = Job()
+            launch {
+                val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
+                articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
+                articles?.let { showArticles(it) }
+            }
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mJob.cancel()
+    }
+
     private fun showArticles(articles: List<Article>) {
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-            // The URL belonging to the selected article.
             val articleUrl = articles[position].url
-            // Initialize the Custom Tabs Intent Builder.
             val ctBuilder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
-            // Show the website's title in the Custom Tab.
             ctBuilder.setShowTitle(true)
-            // Set the toolbar's color to be the app's primary color.
             ctBuilder.setToolbarColor(
-                ResourcesCompat.getColor(resources,
-                    R.color.colorPrimary, null))
-            // Build the Custom Tabs intent.
+                ResourcesCompat.getColor(
+                    resources,
+                    R.color.colorPrimary,
+                    null
+                )
+            )
             val ctIntent: CustomTabsIntent = ctBuilder.build()
-            // Parse the article URL as a Uri, and then launch the
-            // intent.
-            ctIntent.launchUrl(activity, Uri.parse(articleUrl))
+            ctIntent.launchUrl(requireContext(), Uri.parse(articleUrl))
         }
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = ArticlesAdapter(context, articles, itemOnClick)
         }
-    }
-
-    private fun pruneArticles(fullList: List<Article>): List<Article> {
-        val shortList = fullList.toMutableList()
-
-        for (article in fullList) {
-            if (article.timeToRead > readTime) {
-                shortList.remove(article)
-            }
-        }
-
-        return shortList.toList()
     }
 }

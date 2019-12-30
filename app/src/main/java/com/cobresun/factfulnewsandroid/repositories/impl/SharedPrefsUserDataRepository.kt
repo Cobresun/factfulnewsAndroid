@@ -1,22 +1,21 @@
 package com.cobresun.factfulnewsandroid.repositories.impl
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.cobresun.factfulnewsandroid.CategoryUtils
 import com.cobresun.factfulnewsandroid.repositories.UserDataRepository
 
 class SharedPrefsUserDataRepository(private val context: Context) : UserDataRepository {
 
-    val PREFS_NAME = "userPrefs"
+    private val userPreferences by lazy { context.getSharedPreferences("userPrefs", Context.MODE_PRIVATE) }
 
     override fun readUserCategories(): Array<String> {
-        val settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
-        var defaultCategories = CategoryUtils.categories
-        var userCategories: MutableList<String> = ArrayList()
+        val defaultCategories = CategoryUtils.categories
+        val userCategories: MutableList<String> = ArrayList()
 
         for(category in defaultCategories){
-            if(settings.getBoolean("category_$category", true)){
+            if(userPreferences.getBoolean("category_$category", true)){
                 userCategories.add(category)
             }
         }
@@ -24,15 +23,11 @@ class SharedPrefsUserDataRepository(private val context: Context) : UserDataRepo
     }
 
     override fun writeUserCategories(category: String, enabled: Boolean) {
-        val settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val editor = settings.edit()
-        editor.putBoolean(category, enabled)
-        editor.apply()
+        userPreferences.edit { putBoolean(category, enabled) }
     }
 
     override fun readUserReadTime(): Int {
-        val settings = PreferenceManager.getDefaultSharedPreferences(context)
-
-        return settings.getInt("read_time", 30)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getInt("read_time", 30)
     }
 }

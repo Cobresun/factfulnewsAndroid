@@ -13,7 +13,7 @@ class TabsPagerAdapter(
     private val tabsCache : Array<TabFragment?> = arrayOfNulls<TabFragment?>(numCategories)
 
     override fun getItem(position: Int): Fragment {
-        if(tabsCache[position] == null){
+        if (tabsCache[position] == null) {
             tabsCache[position] = TabFragment(tabTitles[position], settings)
         }
 
