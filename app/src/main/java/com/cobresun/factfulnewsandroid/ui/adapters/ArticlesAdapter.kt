@@ -31,14 +31,12 @@ class ArticlesAdapter(private val context: Context, private val articles: List<A
         holder.snippet.text = article.snippet
         holder.timeToRead.text = context.getString(R.string.time_to_read_format, article.timeToRead)
         holder.share.setOnClickListener {
-            // TODO: Make this use the newer share menu in Android
-            //       instead of having it fall back to the old share
-            //       implementation.
-            val shareIntent: Intent = Intent().apply {
+            val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, article.title + "\n\n" + article.url)
                 type = "text/plain"
             }
+            val shareIntent = Intent.createChooser(sendIntent, null)
             context.startActivity(shareIntent)
         }
 

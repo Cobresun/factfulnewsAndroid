@@ -21,8 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-// TODO: IDK how we wrote this code lol Fragment with parameters yikes - crashes on rotation
-class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScope {
+// TODO: IDK how we wrote this code lol... Fragment with parameters yikes - crashes on rotation
+class TabFragment(
+    private val title: String,
+    private val settings: Settings
+) : Fragment(), CoroutineScope {
 
     private lateinit var mJob: Job
     override val coroutineContext: CoroutineContext
@@ -32,8 +35,6 @@ class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScop
         Timber.e("Coroutine Exception", ":${throwable.localizedMessage}")
     }
 
-    private val tabTitle = title
-    private val readTime = settings.readTime
     private var articles: List<Article>? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,8 +58,8 @@ class TabFragment(title: String, settings: Settings) : Fragment(), CoroutineScop
             val apiService = retrofit.create(ApiService::class.java)
             mJob = Job()
             launch(coroutineExceptionHandler) {
-                val fetchResponse: FetchResponse = apiService.fetchArticles(tabTitle)
-                articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
+                val fetchResponse: FetchResponse = apiService.fetchArticles(title)
+                articles = fetchResponse.articles.filter { it.timeToRead <= settings.readTime }
                 articles?.let { showArticles(it) }
             }
         }
