@@ -59,25 +59,32 @@ class TabFragment : Fragment() {
         requireContext().startActivity(shareIntent)
     }
 
+    private val articlesAdapter by lazy {
+        ArticlesAdapter(
+            requireContext(),
+            emptyList(),
+            articleClickListener,
+            articleShareClickListener
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.articles.observe(viewLifecycleOwner, Observer {
-            showArticles(it!!)
-        })
         return inflater.inflate(R.layout.tab_fragment, container, false)
     }
 
-    private fun showArticles(articles: List<Article>) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         recyclerView.apply {
-            adapter = ArticlesAdapter(
-                context = requireContext(),
-                articles = articles,
-                clickListener = articleClickListener,
-                shareClickListener = articleShareClickListener
-            )
+            adapter = articlesAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
+        viewModel.articles.observe(viewLifecycleOwner, Observer {
+            articlesAdapter.setData(it!!)
+        })
     }
 }

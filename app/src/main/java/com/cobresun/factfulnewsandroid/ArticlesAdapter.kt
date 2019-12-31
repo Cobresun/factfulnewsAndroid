@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.article_row.view.*
 
 class ArticlesAdapter(
     private val context: Context,
-    private val articles: List<Article>,
+    private var articles: List<Article>,
     private val clickListener: (Article) -> Unit,
     private val shareClickListener: (Article) -> Unit
 ) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
@@ -35,6 +35,11 @@ class ArticlesAdapter(
             .load(articles[position].urlToImage)
             .override(holder.photo.width)
             .into(holder.photo)
+    }
+
+    fun setData(newArticles: List<Article>) {
+        articles = newArticles
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

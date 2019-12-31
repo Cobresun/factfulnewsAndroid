@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_setting) {
+            // TODO: Get rid of SettingsActivity and just use a Fragment
             val intent = Intent(applicationContext, SettingsActivity::class.java)
             startActivity(intent)
             return true
