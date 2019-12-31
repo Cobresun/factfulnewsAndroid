@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid.backend.models
+package com.cobresun.factfulnewsandroid.models
 
 data class FetchResponse(
     val articles: List<Article>

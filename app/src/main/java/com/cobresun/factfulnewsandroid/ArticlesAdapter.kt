@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cobresun.factfulnewsandroid.backend.models.Article
+import com.cobresun.factfulnewsandroid.models.Article
 import kotlinx.android.synthetic.main.article_row.view.*
 
 class ArticlesAdapter(

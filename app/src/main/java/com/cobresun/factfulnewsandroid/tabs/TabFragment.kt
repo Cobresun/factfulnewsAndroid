@@ -10,21 +10,16 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
-import com.cobresun.factfulnewsandroid.backend.ApiService
-import com.cobresun.factfulnewsandroid.backend.models.Article
-import com.cobresun.factfulnewsandroid.backend.models.FetchResponse
+import com.cobresun.factfulnewsandroid.models.Article
+import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
 import kotlinx.android.synthetic.main.tab_fragment.*
-import kotlinx.coroutines.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
-class TabFragment : Fragment(), CoroutineScope {
+class TabFragment : Fragment() {
 
     companion object {
         private const val TAB_CATEGORY = "tab_category"
@@ -40,21 +35,10 @@ class TabFragment : Fragment(), CoroutineScope {
     private val readTime: Int by lazy {
         SharedPrefsUserDataRepository(requireContext()).readUserReadTime()
     }
-
-    private lateinit var mJob: Job
-    override val coroutineContext: CoroutineContext
-        get() = mJob + Dispatchers.Main
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.e("Coroutine Exception", ":$throwable")
+    // TODO: This is getting re-initialized on configuration changes!
+    private val viewModel by lazy {
+        TabViewModel(readTime, tabCategory, ArticlesRepository())
     }
-
-    private val apiService = Retrofit
-        .Builder()
-        .baseUrl("https://factfulnews.herokuapp.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(ApiService::class.java)
 
     private val articleClickListener: (Article) -> Unit = {
         CustomTabsIntent
@@ -75,31 +59,14 @@ class TabFragment : Fragment(), CoroutineScope {
         requireContext().startActivity(shareIntent)
     }
 
-    private var articles: List<Article>? = null
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        articles?.let { showArticles(it) }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (articles == null) {
-            mJob = Job()
-            launch(coroutineExceptionHandler) {
-                val fetchResponse: FetchResponse = apiService.fetchArticles(tabCategory)
-                articles = fetchResponse.articles.filter { it.timeToRead <= readTime }
-                articles?.let { showArticles(it) }
-            }
-        }
+        viewModel.articles.observe(viewLifecycleOwner, Observer {
+            showArticles(it!!)
+        })
         return inflater.inflate(R.layout.tab_fragment, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mJob.cancel()
     }
 
     private fun showArticles(articles: List<Article>) {
