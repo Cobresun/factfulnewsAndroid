@@ -18,6 +18,3 @@ Features:
 - No distracting infinite feeds, 10 articles (per category) chosen everyday. Just like a newspaper!
 - Simply, easy to use, minimalist interface.
 - Browse what's most important in the world, not just what's personalized to you
-
-## Download on Google Play
-[Download app here](https://play.google.com/store/apps/details?id=com.cobresun.factfulnewsandroid). 
