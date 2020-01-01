@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
@@ -32,12 +33,9 @@ class TabFragment : Fragment() {
     }
 
     private val tabCategory: String by lazy { arguments?.getString(TAB_CATEGORY) ?: "" }
+
     private val readTime: Int by lazy {
         SharedPrefsUserDataRepository(requireContext()).readUserReadTime()
-    }
-    // TODO: This is getting re-initialized on configuration changes!
-    private val viewModel by lazy {
-        TabViewModel(readTime, tabCategory, ArticlesRepository())
     }
 
     private val articleClickListener: (Article) -> Unit = {
@@ -66,6 +64,14 @@ class TabFragment : Fragment() {
             articleClickListener,
             articleShareClickListener
         )
+    }
+
+    private lateinit var viewModel: TabViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val viewModelFactory = TabViewModelFactory(readTime, tabCategory, ArticlesRepository())
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TabViewModel::class.java)
     }
 
     override fun onCreateView(
