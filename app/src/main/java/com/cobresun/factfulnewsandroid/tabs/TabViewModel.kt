@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import com.cobresun.factfulnewsandroid.models.Article
+import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class TabViewModel(
@@ -23,11 +25,11 @@ class TabViewModel(
     }
 
     init {
-        viewModelScope.launch(handler) {
+        viewModelScope.launch(Dispatchers.IO + handler) {
             val articles = articlesRepository
                 .getArticles(tabCategory)
                 .filter { it.timeToRead <= readTime }
-            _articles.value = articles
+            withContext(Dispatchers.Main) { _articles.value = articles }
         }
     }
 }
