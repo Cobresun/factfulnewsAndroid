@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.api.load
+import coil.size.Scale
 import com.cobresun.factfulnewsandroid.models.Article
 import kotlinx.android.synthetic.main.article_row.view.*
 
@@ -31,10 +32,9 @@ class ArticlesAdapter(
         holder.title.text = articles[position].title
         holder.snippet.text = articles[position].snippet
         holder.timeToRead.text = context.getString(R.string.time_to_read_format, articles[position].timeToRead)
-        Glide.with(context)
-            .load(articles[position].urlToImage)
-            .override(holder.photo.width)
-            .into(holder.photo)
+        holder.photo.load(articles[position].urlToImage) {
+            scale(Scale.FIT)
+        }
     }
 
     fun setData(newArticles: List<Article>) {
