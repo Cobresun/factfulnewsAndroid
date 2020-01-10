@@ -1,5 +1,6 @@
 package com.cobresun.factfulnewsandroid.tabs
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
@@ -35,7 +37,10 @@ class TabFragment : Fragment() {
     private val tabCategory: String by lazy { arguments?.getString(TAB_CATEGORY) ?: "" }
 
     private val readTime: Int by lazy {
-        SharedPrefsUserDataRepository(requireContext()).readUserReadTime()
+        SharedPrefsUserDataRepository(
+            requireContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE),
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+        ).readUserReadTime()
     }
 
     private val articleClickListener: (Article) -> Unit = {

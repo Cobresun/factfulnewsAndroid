@@ -1,10 +1,12 @@
 package com.cobresun.factfulnewsandroid
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.cobresun.factfulnewsandroid.tabs.TabsPagerAdapter
@@ -21,7 +23,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTabLayout() {
-        val categories = SharedPrefsUserDataRepository(applicationContext).readUserCategories()
+        val categories = SharedPrefsUserDataRepository(
+            applicationContext.getSharedPreferences("userPrefs", Context.MODE_PRIVATE),
+            PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        ).readUserCategories()
         viewPager.adapter = TabsPagerAdapter(this, categories)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = categories[position]
