@@ -11,8 +11,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.ArticlesAdapter
@@ -71,12 +71,8 @@ class TabFragment : Fragment() {
         )
     }
 
-    private lateinit var viewModel: TabViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val viewModelFactory = TabViewModelFactory(readTime, tabCategory, ArticlesRepository())
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TabViewModel::class.java)
+    private val viewModel: TabViewModel by viewModels {
+        TabViewModelFactory(readTime, tabCategory, ArticlesRepository())
     }
 
     override fun onCreateView(
