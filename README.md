@@ -24,3 +24,4 @@ Features:
 - Simply, easy to use, minimalist interface.
 - Browse what's most important in the world, not just what's personalized to you
 - Customize the categories to what you're interested in, and max read time if you're in a rush
+- Dark/light mode that obeys system settings
