@@ -25,3 +25,5 @@ Features:
 - Browse what's most important in the world, not just what's personalized to you
 - Customize the categories to what you're interested in, and max read time if you're in a rush
 - Dark/light mode that obeys system settings
+
+[The backend repo for this project](https://github.com/Cobresun/Factfulnews-backend). 
