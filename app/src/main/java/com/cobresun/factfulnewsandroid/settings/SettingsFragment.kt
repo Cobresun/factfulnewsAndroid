@@ -1,6 +1,5 @@
 package com.cobresun.factfulnewsandroid.settings
 
-import android.content.Context
 import android.os.Bundle
 import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
@@ -18,7 +17,6 @@ open class SettingsFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         if (preference.key.startsWith("category_")) {
             val prefs = SharedPrefsUserDataRepository(
-                requireContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE),
                 PreferenceManager.getDefaultSharedPreferences(requireContext())
             )
             val newVal = (preference as CheckBoxPreference).isChecked

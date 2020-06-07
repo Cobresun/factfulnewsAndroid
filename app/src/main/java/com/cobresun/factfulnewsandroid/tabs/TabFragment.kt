@@ -1,6 +1,5 @@
 package com.cobresun.factfulnewsandroid.tabs
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -38,7 +37,6 @@ class TabFragment : Fragment() {
 
     private val readTime: Int by lazy {
         SharedPrefsUserDataRepository(
-            requireContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE),
             PreferenceManager.getDefaultSharedPreferences(requireContext())
         ).readUserReadTime()
     }

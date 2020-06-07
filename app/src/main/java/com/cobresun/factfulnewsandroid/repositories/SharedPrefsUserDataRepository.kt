@@ -5,8 +5,7 @@ import androidx.core.content.edit
 import com.cobresun.factfulnewsandroid.CategoryUtils
 
 class SharedPrefsUserDataRepository(
-    private val sharedPreferences: SharedPreferences,
-    private val defaultSharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences
 ) {
 
     fun readUserCategories(): List<String> {
@@ -18,6 +17,6 @@ class SharedPrefsUserDataRepository(
     }
 
     fun readUserReadTime(): Int {
-        return defaultSharedPreferences.getInt("read_time", 30)
+        return sharedPreferences.getInt("read_time", 30)
     }
 }
