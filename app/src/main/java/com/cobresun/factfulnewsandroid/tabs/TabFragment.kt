@@ -88,8 +88,19 @@ class TabFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.articles.observe(viewLifecycleOwner, Observer {
-            articlesAdapter.setData(it!!)
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is TabViewModel.TabState.LoadingState -> {
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }
+                is TabViewModel.TabState.ArticleData -> {
+                    articlesAdapter.setData(it.articles)
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+                is TabViewModel.TabState.ErrorState -> TODO()
+            }
         })
     }
 }

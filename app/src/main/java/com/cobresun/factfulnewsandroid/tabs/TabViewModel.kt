@@ -1,33 +1,31 @@
 package com.cobresun.factfulnewsandroid.tabs
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TabViewModel(
-    private val readTime: Int,
-    private val tabCategory: String,
-    private val articlesRepository: ArticlesRepository
+    readTime: Int,
+    tabCategory: String,
+    articlesRepository: ArticlesRepository
 ) : ViewModel() {
 
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.e("Error", "Caught $exception")
+    sealed class TabState {
+        object LoadingState : TabState()
+        data class ArticleData(val articles: List<Article>): TabState()
+        data class ErrorState(val error: String): TabState()
     }
 
-    private val _articles = liveData(Dispatchers.IO + handler) {
-        val articles = articlesRepository
-            .getArticles(tabCategory)
-            .filter { it.timeToRead <= readTime }
-        emit(articles)
-    }
-    val articles: LiveData<List<Article>> = _articles
+    private val _state: MutableLiveData<TabState> = MutableLiveData(TabState.LoadingState)
+    val state: LiveData<TabState> = _state
 
+    init {
+        viewModelScope.launch {
+            val articles = articlesRepository.getArticles(tabCategory).filter { it.timeToRead <= readTime }
+            _state.postValue(TabState.ArticleData(articles))
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
