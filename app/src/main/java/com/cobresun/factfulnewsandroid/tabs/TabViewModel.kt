@@ -1,8 +1,10 @@
 package com.cobresun.factfulnewsandroid.tabs
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class TabViewModel(
@@ -21,7 +23,7 @@ class TabViewModel(
     val state: LiveData<TabState> = _state
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             val articles = articlesRepository.getArticles(tabCategory).filter { it.timeToRead <= readTime }
             _state.postValue(TabState.ArticleData(articles))
         }
@@ -37,4 +39,8 @@ class TabViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TabViewModel(readTime, tabCategory, articlesRepository) as T
     }
+}
+
+private val handler = CoroutineExceptionHandler { _, exception ->
+    Log.e("Error", "Caught $exception")
 }
