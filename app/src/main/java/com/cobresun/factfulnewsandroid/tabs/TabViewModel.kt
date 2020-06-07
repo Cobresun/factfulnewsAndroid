@@ -1,5 +1,6 @@
 package com.cobresun.factfulnewsandroid.tabs
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,7 +9,6 @@ import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import timber.log.Timber
 
 class TabViewModel(
     private val readTime: Int,
@@ -17,7 +17,7 @@ class TabViewModel(
 ) : ViewModel() {
 
     private val handler = CoroutineExceptionHandler { _, exception ->
-        Timber.e("Caught $exception")
+        Log.e("Error", "Caught $exception")
     }
 
     private val _articles = liveData(Dispatchers.IO + handler) {
