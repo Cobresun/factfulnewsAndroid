@@ -3,9 +3,11 @@ package com.cobresun.factfulnewsandroid.tabs
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
@@ -99,7 +101,10 @@ class TabFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                 }
-                is TabViewModel.TabState.ErrorState -> TODO()
+                is TabViewModel.TabState.ErrorState -> {
+                    Log.e("Error", it.error)
+                    Toast.makeText(requireContext(), getString(R.string.failed_fetch_alert), Toast.LENGTH_LONG).show()
+                }
             }
         })
     }

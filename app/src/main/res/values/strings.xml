@@ -3,4 +3,5 @@
     <string name="article_photo_content_desc">An image from the article</string>
     <string name="share_button">Share button</string>
     <string name="time_to_read_format">%d minute read</string>
+    <string name="failed_fetch_alert">Could not get articles, check your internet connection</string>
 </resources>

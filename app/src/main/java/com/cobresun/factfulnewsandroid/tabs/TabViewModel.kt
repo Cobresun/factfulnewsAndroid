@@ -1,6 +1,5 @@
 package com.cobresun.factfulnewsandroid.tabs
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
@@ -12,6 +11,10 @@ class TabViewModel(
     tabCategory: String,
     articlesRepository: ArticlesRepository
 ) : ViewModel() {
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        _state.postValue(TabState.ErrorState(exception.toString()))
+    }
 
     sealed class TabState {
         object LoadingState : TabState()
@@ -39,8 +42,4 @@ class TabViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TabViewModel(readTime, tabCategory, articlesRepository) as T
     }
-}
-
-private val handler = CoroutineExceptionHandler { _, exception ->
-    Log.e("Error", "Caught $exception")
 }
