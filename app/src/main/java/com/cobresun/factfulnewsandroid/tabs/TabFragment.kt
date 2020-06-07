@@ -20,7 +20,7 @@ import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
-import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
+import com.cobresun.factfulnewsandroid.repositories.UserPreferences
 import kotlinx.android.synthetic.main.tab_fragment.*
 
 class TabFragment : Fragment() {
@@ -33,14 +33,6 @@ class TabFragment : Fragment() {
                 TAB_CATEGORY to category
             )
         }
-    }
-
-    private val tabCategory: String by lazy { arguments?.getString(TAB_CATEGORY) ?: "" }
-
-    private val readTime: Int by lazy {
-        SharedPrefsUserDataRepository(
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-        ).readUserReadTime()
     }
 
     private val articleClickListener: (Article) -> Unit = {
@@ -62,17 +54,12 @@ class TabFragment : Fragment() {
         requireContext().startActivity(shareIntent)
     }
 
-    private val articlesAdapter by lazy {
-        ArticlesAdapter(
-            requireContext(),
-            emptyList(),
-            articleClickListener,
-            articleShareClickListener
-        )
-    }
-
     private val viewModel: TabViewModel by viewModels {
-        TabViewModelFactory(readTime, tabCategory, ArticlesRepository())
+        TabViewModelFactory(
+            UserPreferences(PreferenceManager.getDefaultSharedPreferences(requireContext())),
+            requireArguments().getString(TAB_CATEGORY)!!,
+            ArticlesRepository()
+        )
     }
 
     override fun onCreateView(
@@ -85,25 +72,36 @@ class TabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val articlesAdapter = ArticlesAdapter(
+            requireContext(),
+            emptyList(),
+            articleClickListener,
+            articleShareClickListener
+        )
+
         recyclerView.apply {
             adapter = articlesAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            when(it) {
+        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
                 is TabViewModel.TabState.LoadingState -> {
                     progressBar.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
                 }
                 is TabViewModel.TabState.ArticleData -> {
-                    articlesAdapter.setData(it.articles)
+                    articlesAdapter.setData(state.articles)
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                 }
                 is TabViewModel.TabState.ErrorState -> {
-                    Log.e("Error", it.error)
-                    Toast.makeText(requireContext(), getString(R.string.failed_fetch_alert), Toast.LENGTH_LONG).show()
+                    Log.e("Error", state.error)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.failed_fetch_alert),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         })

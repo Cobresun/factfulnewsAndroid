@@ -3,11 +3,12 @@ package com.cobresun.factfulnewsandroid.tabs
 import androidx.lifecycle.*
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
+import com.cobresun.factfulnewsandroid.repositories.UserPreferences
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class TabViewModel(
-    readTime: Int,
+    userPreferences: UserPreferences,
     tabCategory: String,
     articlesRepository: ArticlesRepository
 ) : ViewModel() {
@@ -27,7 +28,9 @@ class TabViewModel(
 
     init {
         viewModelScope.launch(handler) {
-            val articles = articlesRepository.getArticles(tabCategory).filter { it.timeToRead <= readTime }
+            val articles = articlesRepository.getArticles(tabCategory).filter {
+                it.timeToRead <= userPreferences.userReadTime()
+            }
             _state.postValue(TabState.ArticleData(articles))
         }
     }
@@ -35,11 +38,11 @@ class TabViewModel(
 
 @Suppress("UNCHECKED_CAST")
 class TabViewModelFactory(
-    private val readTime: Int,
+    private val userPreferences: UserPreferences,
     private val tabCategory: String,
     private val articlesRepository: ArticlesRepository
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TabViewModel(readTime, tabCategory, articlesRepository) as T
+        return TabViewModel(userPreferences, tabCategory, articlesRepository) as T
     }
 }

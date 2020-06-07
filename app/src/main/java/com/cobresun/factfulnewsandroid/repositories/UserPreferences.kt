@@ -4,19 +4,19 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.cobresun.factfulnewsandroid.CategoryUtils
 
-class SharedPrefsUserDataRepository(
+class UserPreferences(
     private val sharedPreferences: SharedPreferences
 ) {
 
-    fun readUserCategories(): List<String> {
-        return CategoryUtils.categories.filter { sharedPreferences.getBoolean("category_$it", true) }
+    fun userCategories(): List<String> {
+        return CategoryUtils.categories.filter {
+            sharedPreferences.getBoolean("category_$it", true)
+        }
     }
 
     fun writeUserCategories(category: String, enabled: Boolean) {
         sharedPreferences.edit { putBoolean(category, enabled) }
     }
 
-    fun readUserReadTime(): Int {
-        return sharedPreferences.getInt("read_time", 30)
-    }
+    fun userReadTime() = sharedPreferences.getInt("read_time", 30)
 }

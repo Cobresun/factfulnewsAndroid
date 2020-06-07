@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.cobresun.factfulnewsandroid.repositories.SharedPrefsUserDataRepository
+import com.cobresun.factfulnewsandroid.repositories.UserPreferences
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.cobresun.factfulnewsandroid.tabs.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTabLayout() {
-        val categories = SharedPrefsUserDataRepository(
+        val categories = UserPreferences(
             PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        ).readUserCategories()
+        ).userCategories()
         viewPager.adapter = TabsPagerAdapter(this, categories)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = categories[position]
@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_setting) {
-            // TODO: Get rid of SettingsActivity and just use a Fragment
             val intent = Intent(applicationContext, SettingsActivity::class.java)
             startActivity(intent)
             return true
