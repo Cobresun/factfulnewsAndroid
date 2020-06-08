@@ -27,6 +27,8 @@ class TabViewModel(
     val state: LiveData<TabState> = _state
 
     init {
+        // TODO: Cache articles for offline using Dropbox Store library? Display scraped text offline
+        // TODO: Run a service daily (opt-in) that fetches the new articles and caches them
         viewModelScope.launch(handler) {
             val articles = articlesRepository.getArticles(tabCategory).filter {
                 it.timeToRead <= userPreferences.userReadTime()
