@@ -2,15 +2,14 @@ package com.cobresun.factfulnewsandroid
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.size.Scale
+import com.cobresun.factfulnewsandroid.databinding.ArticleRowBinding
 import com.cobresun.factfulnewsandroid.models.Article
-import kotlinx.android.synthetic.main.article_row.view.*
 
 class ArticlesAdapter(
     private val context: Context,
@@ -20,8 +19,8 @@ class ArticlesAdapter(
 ) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.article_row, parent, false)
-        return ViewHolder(view)
+        val binding = ArticleRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = articles.size
@@ -42,11 +41,11 @@ class ArticlesAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.title
-        val snippet: TextView = itemView.snippet
-        val photo: ImageView = itemView.photo
-        val timeToRead: TextView = itemView.timeToRead
-        val share: ImageView = itemView.share
+    class ViewHolder(binding: ArticleRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        val title: TextView = binding.title
+        val snippet: TextView = binding.snippet
+        val photo: ImageView = binding.photo
+        val timeToRead: TextView = binding.timeToRead
+        val share: ImageView = binding.share
     }
 }

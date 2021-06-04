@@ -9,19 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
+import com.cobresun.factfulnewsandroid.databinding.TabFragmentBinding
 import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import com.cobresun.factfulnewsandroid.repositories.UserPreferences
-import kotlinx.android.synthetic.main.tab_fragment.*
 
 class TabFragment : Fragment() {
 
@@ -35,11 +33,13 @@ class TabFragment : Fragment() {
         }
     }
 
+    private var _binding: TabFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private val articleClickListener: (Article) -> Unit = {
         CustomTabsIntent
             .Builder()
             .setShowTitle(true)
-            .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
             .build()
             .launchUrl(requireContext(), Uri.parse(it.url))
     }
@@ -63,10 +63,12 @@ class TabFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.tab_fragment, container, false)
+    ): View {
+        _binding = TabFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,21 +81,21 @@ class TabFragment : Fragment() {
             articleShareClickListener
         )
 
-        recyclerView.apply {
+        binding.recyclerView.apply {
             adapter = articlesAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.state.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is TabViewModel.TabState.LoadingState -> {
-                    progressBar.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
                 }
                 is TabViewModel.TabState.ArticleData -> {
                     articlesAdapter.setData(state.articles)
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
                 }
                 is TabViewModel.TabState.ErrorState -> {
                     Log.e("Error", state.error)
@@ -105,5 +107,10 @@ class TabFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

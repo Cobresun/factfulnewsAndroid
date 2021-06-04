@@ -6,18 +6,22 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import com.cobresun.factfulnewsandroid.databinding.ActivityMainBinding
 import com.cobresun.factfulnewsandroid.repositories.UserPreferences
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.cobresun.factfulnewsandroid.tabs.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        setSupportActionBar(binding.toolbar)
         setupTabLayout()
     }
 
@@ -25,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         val categories = UserPreferences(
             PreferenceManager.getDefaultSharedPreferences(applicationContext)
         ).userCategories()
-        viewPager.adapter = TabsPagerAdapter(this, categories)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        binding.viewPager.adapter = TabsPagerAdapter(this, categories)
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = categories[position]
         }.attach()
     }
