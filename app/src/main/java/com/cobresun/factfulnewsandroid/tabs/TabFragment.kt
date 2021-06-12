@@ -76,7 +76,6 @@ class TabFragment : Fragment() {
 
         val articlesAdapter = ArticlesAdapter(
             requireContext(),
-            emptyList(),
             articleClickListener,
             articleShareClickListener
         )
@@ -97,6 +96,7 @@ class TabFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                 }
+                // TODO: Need to re-try if server was unable to respond first time
                 is TabViewModel.TabState.ErrorState -> {
                     Log.e("Error", state.error)
                     Toast.makeText(
