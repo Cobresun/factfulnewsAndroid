@@ -1,18 +1,13 @@
 package com.cobresun.factfulnewsandroid.repositories
 
-import com.cobresun.factfulnewsandroid.models.Article
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.cobresun.factfulnewsandroid.tabs.Article
+import com.cobresun.factfulnewsandroid.tabs.Category
+import javax.inject.Inject
 
-class ArticlesRepository {
-    private val apiService = Retrofit
-        .Builder()
-        .baseUrl("https://factfulnews.herokuapp.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(ApiService::class.java)
-
-    suspend fun getArticles(tabCategory: String): List<Article> {
-        return apiService.fetchArticles(tabCategory).articles
+class ArticlesRepository @Inject constructor(
+    private val apiService: ApiService
+) {
+    suspend fun getArticles(tabCategory: Category): List<Article> {
+        return apiService.fetchArticles(tabCategory.value).articles
     }
 }

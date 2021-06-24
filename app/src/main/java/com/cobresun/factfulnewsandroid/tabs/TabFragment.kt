@@ -9,29 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cobresun.factfulnewsandroid.ArticlesAdapter
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.databinding.TabFragmentBinding
-import com.cobresun.factfulnewsandroid.models.Article
-import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
-import com.cobresun.factfulnewsandroid.repositories.UserPreferences
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TabFragment : Fragment() {
-
-    companion object {
-        private const val TAB_CATEGORY = "tab_category"
-
-        fun newInstance(category: String) = TabFragment().apply {
-            arguments = bundleOf(
-                TAB_CATEGORY to category
-            )
-        }
-    }
 
     private var _binding: TabFragmentBinding? = null
     private val binding get() = _binding!!
@@ -54,13 +40,7 @@ class TabFragment : Fragment() {
         requireContext().startActivity(shareIntent)
     }
 
-    private val viewModel: TabViewModel by viewModels {
-        TabViewModelFactory(
-            UserPreferences(PreferenceManager.getDefaultSharedPreferences(requireContext())),
-            requireArguments().getString(TAB_CATEGORY)!!,
-            ArticlesRepository()
-        )
-    }
+    private val viewModel: TabViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

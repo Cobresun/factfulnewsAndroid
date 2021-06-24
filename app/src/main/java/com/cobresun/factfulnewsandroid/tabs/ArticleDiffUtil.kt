@@ -1,7 +1,6 @@
-package com.cobresun.factfulnewsandroid
+package com.cobresun.factfulnewsandroid.tabs
 
 import androidx.recyclerview.widget.DiffUtil
-import com.cobresun.factfulnewsandroid.models.Article
 
 class ArticleDiffUtil(
     private val oldList: List<Article>,

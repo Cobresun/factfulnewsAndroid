@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid
+package com.cobresun.factfulnewsandroid.tabs
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.size.Scale
+import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.databinding.ArticleRowBinding
-import com.cobresun.factfulnewsandroid.models.Article
 
 class ArticlesAdapter(
     private val context: Context,

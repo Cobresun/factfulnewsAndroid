@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import com.cobresun.factfulnewsandroid.databinding.ActivityMainBinding
 import com.cobresun.factfulnewsandroid.repositories.UserPreferences
 import com.cobresun.factfulnewsandroid.settings.SettingsActivity
 import com.cobresun.factfulnewsandroid.tabs.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject lateinit var userPreferences : UserPreferences
 
     private lateinit var binding: ActivityMainBinding
 
@@ -26,12 +30,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTabLayout() {
-        val categories = UserPreferences(
-            PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        ).userCategories()
+        val categories = userPreferences.userCategories()
         binding.viewPager.adapter = TabsPagerAdapter(this, categories)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = categories[position]
+            tab.text = categories[position].value
         }.attach()
     }
 

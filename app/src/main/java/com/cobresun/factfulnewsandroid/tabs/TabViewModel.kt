@@ -1,15 +1,17 @@
 package com.cobresun.factfulnewsandroid.tabs
 
 import androidx.lifecycle.*
-import com.cobresun.factfulnewsandroid.models.Article
 import com.cobresun.factfulnewsandroid.repositories.ArticlesRepository
 import com.cobresun.factfulnewsandroid.repositories.UserPreferences
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TabViewModel(
+@HiltViewModel
+class TabViewModel @Inject constructor(
     userPreferences: UserPreferences,
-    tabCategory: String,
+    savedStateHandle: SavedStateHandle,
     articlesRepository: ArticlesRepository
 ) : ViewModel() {
 
@@ -27,22 +29,14 @@ class TabViewModel(
     val state: LiveData<TabState> = _state
 
     init {
+        val categoryString : String = savedStateHandle["category"]!!
+        val category: Category = Category.values().first { it.value == categoryString }
+
         viewModelScope.launch(handler) {
-            val articles = articlesRepository.getArticles(tabCategory).filter {
+            val articles = articlesRepository.getArticles(category).filter {
                 it.timeToRead <= userPreferences.userReadTime()
             }
             _state.postValue(TabState.ArticleData(articles))
         }
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
-class TabViewModelFactory(
-    private val userPreferences: UserPreferences,
-    private val tabCategory: String,
-    private val articlesRepository: ArticlesRepository
-): ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TabViewModel(userPreferences, tabCategory, articlesRepository) as T
     }
 }

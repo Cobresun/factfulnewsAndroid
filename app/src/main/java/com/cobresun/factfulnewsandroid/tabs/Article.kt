@@ -1,4 +1,4 @@
-package com.cobresun.factfulnewsandroid.models
+package com.cobresun.factfulnewsandroid.tabs
 
 data class Article(
     val title: String,

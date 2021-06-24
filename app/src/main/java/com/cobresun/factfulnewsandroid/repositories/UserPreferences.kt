@@ -2,15 +2,16 @@ package com.cobresun.factfulnewsandroid.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.cobresun.factfulnewsandroid.CategoryUtils
+import com.cobresun.factfulnewsandroid.tabs.Category
+import javax.inject.Inject
 
-class UserPreferences(
+class UserPreferences @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
 
-    fun userCategories(): List<String> {
-        return CategoryUtils.categories.filter {
-            sharedPreferences.getBoolean("category_$it", true)
+    fun userCategories(): List<Category> {
+        return Category.values().filter {
+            sharedPreferences.getBoolean("category_${it.value}", true)
         }
     }
 
