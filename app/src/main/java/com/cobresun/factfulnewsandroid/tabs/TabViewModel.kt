@@ -34,7 +34,7 @@ class TabViewModel @Inject constructor(
 
         viewModelScope.launch(handler) {
             val articles = articlesRepository.getArticles(category).filter {
-                it.timeToRead <= userPreferences.userReadTime()
+                it.timeToRead ?: 0 <= userPreferences.userReadTime()
             }
             _state.postValue(TabState.ArticleData(articles))
         }
