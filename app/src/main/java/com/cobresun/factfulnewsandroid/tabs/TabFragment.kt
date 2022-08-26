@@ -65,7 +65,7 @@ class TabFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.state.observe(viewLifecycleOwner, { state ->
+        viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is TabViewModel.TabState.LoadingState -> {
                     binding.progressBar.visibility = View.VISIBLE
@@ -86,7 +86,7 @@ class TabFragment : Fragment() {
                     ).show()
                 }
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
