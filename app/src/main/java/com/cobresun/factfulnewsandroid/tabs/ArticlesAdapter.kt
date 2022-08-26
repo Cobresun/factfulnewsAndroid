@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import coil.size.Scale
 import com.cobresun.factfulnewsandroid.R
 import com.cobresun.factfulnewsandroid.databinding.ArticleRowBinding
@@ -30,7 +30,7 @@ class ArticlesAdapter(
         holder.binding.share.setOnClickListener { shareClickListener(articles[position]) }
         holder.binding.title.text = articles[position].title
         holder.binding.snippet.text = articles[position].snippet
-        holder.binding.timeToRead.text = context.getString(R.string.time_to_read_format, articles[position].timeToRead)
+        holder.binding.timeToRead.text = context.getString(R.string.time_to_read_format, articles[position].timeToRead ?: 0)
         holder.binding.photo.load(articles[position].urlToImage) {
             scale(Scale.FIT)
         }
