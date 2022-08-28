@@ -52,4 +52,10 @@
 
     </PreferenceCategory>
 
+    <Preference
+        android:enabled="true"
+        android:key="contact_info_key"
+        android:selectable="false"
+        android:summary="@string/news_api_contact"
+        android:title="Contact Info" />
 </PreferenceScreen>

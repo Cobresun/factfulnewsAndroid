@@ -4,4 +4,5 @@
     <string name="share_button">Share button</string>
     <string name="time_to_read_format">%d minute read</string>
     <string name="failed_fetch_alert">Could not get articles, check your internet connection</string>
+    <string name="news_api_contact">News provided by News API, and the contact info and details about publishers can be found at: https://newsapi.org/</string>
 </resources>
