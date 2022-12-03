@@ -27,3 +27,8 @@ Features:
 - Dark/light mode that obeys system settings
 
 [The backend repo for this project](https://github.com/Cobresun/Factfulnews-backend). 
+
+# Update (December 2022)
+This app no longer works, for two reasons:
+1. Google Play stopped accepting updates because they implemented some [stricter rules](https://support.google.com/googleplay/android-developer/answer/9935326?hl=en) around being an application that distributes news, and we were unable to comply with the restrictions due to the fact that we were not sourcing the news oursevles. 
+2. [Heroku shut down its free tier](https://blog.heroku.com/next-chapter), which the [backend](https://github.com/Cobresun/Factfulnews-backend) for this app was hosted on, and given nobody was using this app (as far as I'm aware) - I decided to shut it down! Fun while it lasted though :)
